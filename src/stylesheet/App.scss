@@ -3,6 +3,8 @@
   height: $h;
 }
 
+$green: #1a780b;
+
 @mixin btwn($m, $p) {
   margin: $m;
   padding: $p;
@@ -11,20 +13,20 @@
 .App {
   @include space(100%, 100%);
   @include btwn(0, 0);
-  background: #f4f4f4;
   display: flex;
 
   .Navbar {
     @include space(100%, 3rem);
+    background: #f4f4f4;
     display: flex;
     flex-shrink: 0;
-    position: relative;
+    position: fixed;
 
     p {
       margin-top: -0.2rem;
       margin-left: 0.5rem;
       width: 5rem;
-      color: #1a780b;
+      color: $green;
       text-align: center;
       font-family: "jost";
       font-size: 2.5rem;

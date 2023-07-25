@@ -6,9 +6,11 @@ import Club from "./pages/club.js";
 import Community from "./pages/community.js";
 import MyPage from "./pages/myPage.js";
 import Main from "./pages/main.js";
+import Settings from "./pages/settings.js"
 
 //스타일시트 파일
 import "./stylesheet/App.scss";
+import MyPloggings from "./pages/myPloggings.js";
 
 function App() {
   return (
@@ -41,7 +43,7 @@ function App() {
             </li>
             <li>
               <Link
-                to="/myPage"
+                to="/mypage"
                 style={{ textDecoration: "none", color: "#1a780b" }}
               >
                 마이페이지
@@ -54,7 +56,9 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/club" element={<Club />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/" element={<MyPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/myploggings" element={<MyPloggings />} />
       </Routes>
     </div>
   );
