@@ -1,0 +1,252 @@
+@mixin fontSetting($color, $font, $size, $style, $w, $h, $space) {
+    color: $color;
+    font-family: $font;
+    font-size: $size;
+    font-style: $style;
+    font-weight: $w;
+    line-height: $h;
+    letter-spacing: $space;
+}
+
+@mixin detailSetting() {
+    float: left;
+    margin: 2rem;
+    background: #fff;
+    border-radius: 30px;
+    width: 44%;
+    height: 65%;
+}
+
+@mixin left($w, $h) {
+    margin: auto;
+    margin-top: 1rem;
+    width: $w;
+    height: $h;
+    border: 1px solid #42d084;
+    border-radius: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.detail-background {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 1200px;
+    height: 85%;
+    background: #f5f5f5;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    margin-top: 7rem;
+    .detail-top {
+        border-radius: 10px 10px 0px 0px;
+        background: linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.4) 0%,
+                rgba(255, 255, 255, 0.4) 100%
+            ),
+            url("../img/detail_example.jpg");
+        background-color: lightgray 50%;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            border: none;
+            color: black;
+            font-size: 25px;
+            font-weight: 700;
+            background-color: transparent;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        div {
+            @include fontSetting(#000, "inter", 32px, normal, 500, 150%, -0.352px);
+            padding-top: 4rem;
+            padding-left: 2rem;
+        }
+
+        .profile {
+            margin-top: -2rem;
+            padding-bottom: 1rem;
+            @include fontSetting(#000, "inter", 18px, normal, 500, 150%, -0.176px);
+
+            span {
+                vertical-align: middle;
+                padding-right: 1rem;
+            }
+
+            .people-icon {
+                width: 1.2rem;
+                height: 1.2rem;
+                margin-right: -0.9rem;
+                margin-top: 0.4rem;
+            }
+
+            .profile-icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 70%;
+                overflow: hidden;
+                margin-right: -0.5rem;
+            }
+        }
+    }
+}
+
+.detail-main {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+
+    p {
+        @include fontSetting(#000, "inter", 20px, normal, 600, 150%, -0.264px);
+        margin-left: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .detail-left {
+        @include detailSetting();
+    }
+
+    .detail-right {
+        @include detailSetting();
+        margin-left: 2.8rem;
+    }
+
+    .detail-map {
+        @include left(95%, 67%);
+
+        .map {
+            width: 100%;
+            height: 100%;
+        }
+        .detail-map-box {
+            width: 90%;
+            height: 50%;
+            border: 3px solid black;
+            margin: auto;
+        }
+        .detail-map-text {
+            margin-top: 0.5rem;
+            .title {
+                @include fontSetting(#000, "inter", 20px, normal, 500, 150%, -0.264px);
+                vertical-align: middle;
+                margin: 1rem 1rem 0.5rem 1.5rem;
+                display: inline-block;
+            }
+
+            .content {
+                @include fontSetting(#000, "inter", 14px, normal, 500, 150%, -0.264px);
+                vertical-align: middle;
+                margin: 1rem 1rem 0.5rem 0.5rem;
+                display: inline-block;
+            }
+        }
+        .sub {
+            margin-top: -0.3rem;
+        }
+        .detail-text {
+            float: left;
+        }
+        .detail-distance {
+            float: right;
+            margin-top: 3.2rem;
+            margin-right: 1.6rem;
+        }
+        .detail-map-box {
+            width: 90%;
+            height: 50%;
+            border: 2px solid black;
+            margin: auto;
+        }
+    }
+    .detail-schedule {
+        @include left(95%, 25%);
+
+        .schedule-text {
+            margin-top: -1.2rem;
+            vertical-align: middle;
+        }
+        .title {
+            @include fontSetting(#000, "inter", 20px, normal, 500, 150%, -0.264px);
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .content {
+            @include fontSetting(#000, "inter", 17px, normal, 500, 150%, -0.264px);
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: 1.2rem;
+        }
+    }
+
+    .detail-board {
+        width: 100%;
+        height: 85%;
+        margin: auto;
+        .detail-post {
+            padding-top: 1rem;
+            border-bottom: 1px solid #e9e9e9;
+            margin: 0;
+            width: 100%;
+            height: 13%;
+        }
+
+        .action {
+            &:hover {
+                background: #e9e9e9;
+            }
+        }
+
+        .notice-font {
+            border-bottom: 1px solid #f5f5f5;
+        }
+        .post-font {
+            margin-top: 0.1rem;
+            @include fontSetting(#000, "inter", 17px, normal, 500, 150%, -0.264px);
+        }
+        .important {
+            background: #b7ffd9;
+        }
+
+        .img-frame {
+            width: 45px;
+            height: 45px;
+            border-radius: 70%;
+            overflow: hidden;
+            margin-top: -0.5rem;
+            margin-left: 0.5rem;
+            float: left;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+
+        p {
+            float: left;
+            margin-left: 0.7rem;
+        }
+    }
+}
+
+.detail-outside {
+    z-index: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+}
