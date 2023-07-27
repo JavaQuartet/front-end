@@ -10,7 +10,16 @@ function Detail(props) {
         "6시까지 모이세요 다들~",
         "7시로 시간 변경됐습니다.",
         "최종: 9시!!!",
+        "아아아",
+        "아아아",
+        "아아아",
+        "아아아",
+        "아아아",
     ]);
+    const [placeSetting, setPlaceSetting] = useState(false);
+    const [scheduleSetting, setScheduleSetting] = useState(false);
+    const [postBtn, setPostBtn] = useState(false);
+
     useEffect(() => {
         const container = document.getElementById("map");
         const options = { center: new kakao.maps.LatLng(33.450701, 126.570667) };
@@ -22,6 +31,8 @@ function Detail(props) {
             className="detail-outside"
             onClick={() => {
                 props.setModalOpen(false);
+                setPlaceSetting(false);
+                setScheduleSetting(false);
             }}
         >
             <div
@@ -69,6 +80,14 @@ function Detail(props) {
                                 </div>
                             </div>
                             <div className="detail-distance">약 3.5Km</div>
+                            <div
+                                className="setting"
+                                onClick={() => {
+                                    setPlaceSetting(!placeSetting);
+                                }}
+                            >
+                                <img src={require("../img/setting.png")} />
+                            </div>
                         </div>
                         <div className="detail-schedule">
                             <p>일정</p>
@@ -81,6 +100,14 @@ function Detail(props) {
                                 <p className="title">도착</p>
                                 <p className="content">07.15</p>
                                 <p className="content">19:00</p>
+                            </div>
+                            <div
+                                className="setting"
+                                onClick={(e) => {
+                                    setScheduleSetting(!scheduleSetting);
+                                }}
+                            >
+                                <img src={require("../img/setting.png")} />
                             </div>
                         </div>
                     </div>
@@ -104,7 +131,82 @@ function Detail(props) {
                                 );
                             })}
                         </div>
+                        <div
+                            className="detail-posting-btn"
+                            onClick={() => {
+                                setPostBtn(!postBtn);
+                            }}
+                        >
+                            <img src={require("../img/posting.png")} />
+                        </div>
                     </div>
+                    <div className={placeSetting == true ? "settingBox" : "hidden"}>
+                        <form>
+                            <div>
+                                <span>출발</span>
+                                <input></input>
+                            </div>
+                            <div>
+                                <span>도착</span>
+                                <input></input>
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setPlaceSetting(false);
+                                }}
+                            >
+                                설정하기
+                            </button>
+                        </form>
+                    </div>
+                    <div className={scheduleSetting == true ? "settingBox scheduleBox" : "hidden"}>
+                        <form>
+                            <div>
+                                <span>출발</span>
+                                <input type="text" />
+                            </div>
+                            <div>
+                                <span>도착</span>
+                                <input type="text" />
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setPlaceSetting(false);
+                                }}
+                            >
+                                설정하기
+                            </button>
+                        </form>
+                    </div>
+                    <div className={postBtn == true ? "postBox" : "hidden"}>
+                        <div
+                            className="exit-btn"
+                            onClick={() => {
+                                setPostBtn(false);
+                            }}
+                        >
+                            X
+                        </div>
+                        <form className="postWriting">
+                            <div className="notice-div">
+                                <input type="checkbox" id="cb" />
+                                <label for="cb"></label>
+                                <span className="notice-span">공지</span>
+                            </div>
+                            <div className="posting-content">
+                                <span>내용</span>
+                                <input type="textarea" />
+                                <button
+                                    onClick={() => {
+                                        setPostBtn(false);
+                                    }}
+                                >
+                                    확인
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <button className="detail-btn">나가기</button>
                 </div>
             </div>
         </div>
