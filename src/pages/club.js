@@ -1,11 +1,16 @@
-import "../stylesheet/club.scss";
+import React, { useState } from "react";
+
+//컴포넌트
 import Navbar from "../components/navbar.js";
 import Detail from "../components/detail.js";
-import React, { useState } from "react";
+import Create from "../components/create.js";
+
+//스타일시트
+import "../stylesheet/club.scss";
 function Club() {
     const [clubList, setClubList] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
     const [modalOpen, setModalOpen] = useState(false);
-
+    const [createOpen, setCreateOpen] = useState(false);
     return (
         <div>
             <Navbar />
@@ -25,7 +30,12 @@ function Club() {
                     </div>
                 </div>
                 {/* 모임만들기 버튼 */}
-                <div className="club-making">
+                <div
+                    className="club-making"
+                    onClick={() => {
+                        setCreateOpen(true);
+                    }}
+                >
                     <button>+</button>
                     <p>모임만들기</p>
                 </div>
@@ -62,6 +72,7 @@ function Club() {
                     </ul>
                 </div>
                 {modalOpen == true ? <Detail setModalOpen={setModalOpen} /> : null}
+                {createOpen == true ? <Create setCreateOpen={setCreateOpen} /> : null}
             </div>
         </div>
     );
