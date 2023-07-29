@@ -3,14 +3,57 @@
     height: $h;
 }
 
+$green: #1a780b;
+
 @mixin btwn($m, $p) {
     margin: $m;
     padding: $p;
 }
 
 .App {
+<<<<<<< HEAD
     @include space(100%, 100%);
     @include btwn(0, 0);
     display: flex;
     font-family: "inter";
 }
+=======
+  @include space(100%, 100%);
+  @include btwn(0, 0);
+  display: flex;
+
+  .Navbar {
+    @include space(100%, 3rem);
+    background: #f4f4f4;
+    display: flex;
+    flex-shrink: 0;
+    position: fixed;
+
+    p {
+      margin-top: -0.2rem;
+      margin-left: 0.5rem;
+      width: 5rem;
+      color: $green;
+      text-align: center;
+      font-family: "jost";
+      font-size: 2.5rem;
+      font-style: normal;
+      line-height: normal;
+    }
+
+    ul {
+      @include btwn(0, 0);
+      list-style: none;
+      display: flex;
+      margin-left: 0.5rem;
+      position: absolute;
+      right: 0.5rem;
+    }
+
+    li {
+      @include btwn(0.5rem, 0.5rem);
+      list-style: none;
+    }
+  }
+}
+>>>>>>> 865751f (publishing mypage)
