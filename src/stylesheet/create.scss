@@ -32,11 +32,18 @@
     border-radius: 10px;
     margin-top: 7rem;
 
+    .create-title {
+        margin-bottom: -5.5rem;
+        margin-left: 3rem;
+        p {
+            @include fontSetting(#42d084, "inter", 30px, normal, 500, 150%, -0.55px);
+        }
+    }
     .create-image {
         position: relative;
         float: left;
         .club-img {
-            margin: 30% 35%;
+            margin: 45% 25% 15% 42%;
             width: 210px;
             height: 270px;
             border: 1px solid black;
@@ -44,8 +51,8 @@
 
         .setting-img {
             position: absolute;
-            bottom: 14%;
-            right: -40%;
+            bottom: 7%;
+            right: -46%;
         }
     }
 
@@ -53,7 +60,7 @@
         @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.176px);
         float: left;
         margin-left: 20%;
-        margin-top: 8%;
+        margin-top: 12%;
 
         .create-text {
             position: relative;
@@ -82,7 +89,7 @@
     .create-content {
         clear: both;
         position: relative;
-        margin-left: 4.5rem;
+        margin-left: 5.5rem;
         span {
             position: absolute;
             top: 5%;

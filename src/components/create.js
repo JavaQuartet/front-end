@@ -15,6 +15,9 @@ function Create(props) {
                     e.stopPropagation();
                 }}
             >
+                <div className="create-title">
+                    <p>plowithme</p>
+                </div>
                 <div className="create-image">
                     <img src={require("../img/detail_example.jpg")} className="club-img" />
                     <img src={require("../img/setting.png")} className="setting-img" />
