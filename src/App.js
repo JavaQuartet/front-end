@@ -15,50 +15,12 @@ import MyPloggings from "./pages/myPloggings.js";
 function App() {
   return (
     <div className="App">
-      <div className="Navbar">
-        <span>
-          <p>
-            <Link to="/" style={{ textDecoration: "none", color: "#1a780b" }}>
-              Plow
-            </Link>
-          </p>
-        </span>
-        <div className="main-list">
-          <ul>
-            <li>
-              <Link
-                to="/club"
-                style={{ textDecoration: "none", color: "#1a780b" }}
-              >
-                모임
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/community"
-                style={{ textDecoration: "none", color: "#1a780b" }}
-              >
-                커뮤니티
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/mypage"
-                style={{ textDecoration: "none", color: "#1a780b" }}
-              >
-                마이페이지
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/club" element={<Club />} />
         <Route path="/community" element={<Community />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/myploggings" element={<MyPloggings />} />
+        <Route path="/" element={<MyPage />} />
       </Routes>
     </div>
   );

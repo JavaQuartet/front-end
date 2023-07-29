@@ -1,16 +1,17 @@
 @mixin space($w, $h) {
-  width: $w;
-  height: $h;
+    width: $w;
+    height: $h;
 }
 
 $green: #1a780b;
 
 @mixin btwn($m, $p) {
-  margin: $m;
-  padding: $p;
+    margin: $m;
+    padding: $p;
 }
 
 .App {
+<<<<<<< HEAD
   @include space(100%, 100%);
   @include btwn(0, 0);
   display: flex;
@@ -49,3 +50,10 @@ $green: #1a780b;
     }
   }
 }
+=======
+    @include space(100%, 100%);
+    @include btwn(0, 0);
+    display: flex;
+    font-family: "inter";
+}
+>>>>>>> main
