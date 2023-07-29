@@ -24,6 +24,7 @@ function App() {
         <Route path="/community" element={<Community />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="myploggings" element={<MyPloggings />} />
+        <Route path="settings" element={<Settings />} />
       </Routes>
     </div>
   );
