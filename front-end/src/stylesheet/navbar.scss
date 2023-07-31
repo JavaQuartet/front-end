@@ -1,0 +1,57 @@
+@mixin space($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+@mixin btwn($m, $p) {
+    margin: $m;
+    padding: $p;
+}
+
+@mixin fontSetting($size, $style, $w, $h, $space) {
+    font-size: $size;
+    font-style: $style;
+    font-weight: $w;
+    line-height: $h;
+    letter-spacing: $space;
+}
+.Nav-background {
+    @include space(100%, 2%);
+    @include btwn(0, 0);
+    display: flex;
+    margin-bottom: -1rem;
+    .Navbar {
+        @include space(100%, 3rem);
+        display: flex;
+        flex-shrink: 0;
+        position: fixed;
+        z-index: 10;
+        background: #fff;
+        padding-bottom: 5rem;
+        p {
+            margin-top: 0.5rem;
+            margin-left: 2rem;
+            width: 5rem;
+            color: #42d084;
+            text-align: center;
+            @include fontSetting(2.5rem, normal, 500, 150%, -0.55px);
+        }
+
+        ul {
+            list-style: none;
+            @include btwn(0, 0);
+            list-style: none;
+            display: flex;
+            margin-top: 0.5rem;
+            margin-left: 0.5rem;
+            position: absolute;
+            right: 0.5rem;
+        }
+
+        li {
+            list-style: none;
+            @include btwn(0.5rem, 0.5rem);
+            @include fontSetting(1.2rem, normal, 200, 150%, -0.264px);
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@mixin space($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+@mixin btwn($m, $p) {
+    margin: $m;
+    padding: $p;
+}
+
+.App {
+    @include space(100%, 100%);
+    @include btwn(0, 0);
+    display: flex;
+    font-family: "inter";
+}
