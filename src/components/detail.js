@@ -1,7 +1,12 @@
 import React from "react";
-import "../stylesheet/detail.scss";
 import { useEffect, useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
 
+import "../stylesheet/detail.scss";
+import "react-datepicker/dist/react-datepicker.css";
+import ko from "date-fns/locale/ko";
+
+registerLocale("ko", ko);
 const { kakao } = window;
 
 function Detail(props) {
@@ -19,6 +24,14 @@ function Detail(props) {
     const [placeSetting, setPlaceSetting] = useState(false);
     const [scheduleSetting, setScheduleSetting] = useState(false);
     const [postBtn, setPostBtn] = useState(false);
+
+    //datePicker 텍스트 설정 state
+    const [inputStartDate, setInputStartDate] = useState();
+    const [inputEndDate, setInputEndDate] = useState();
+
+    //날짜 텍스트 state
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
     useEffect(() => {
         const container = document.getElementById("map");
@@ -86,20 +99,18 @@ function Detail(props) {
                                     setPlaceSetting(!placeSetting);
                                 }}
                             >
-                                <img src={require("../img/setting.png")} />
+                                <img src={require("../img/posting.png")} />
                             </div>
                         </div>
                         <div className="detail-schedule">
                             <p>일정</p>
                             <div className="schedule-text">
                                 <p className="title">출발</p>
-                                <p className="content">07.15</p>
-                                <p className="content">02:47</p>
+                                <p className="content">{startDate}</p>
                             </div>
                             <div className="schedule-text">
                                 <p className="title">도착</p>
-                                <p className="content">07.15</p>
-                                <p className="content">19:00</p>
+                                <p className="content">{endDate}</p>
                             </div>
                             <div
                                 className="setting"
@@ -107,7 +118,7 @@ function Detail(props) {
                                     setScheduleSetting(!scheduleSetting);
                                 }}
                             >
-                                <img src={require("../img/setting.png")} />
+                                <img src={require("../img/posting.png")} />
                             </div>
                         </div>
                     </div>
@@ -141,42 +152,77 @@ function Detail(props) {
                         </div>
                     </div>
                     <div className={placeSetting == true ? "settingBox" : "hidden"}>
-                        <form>
-                            <div>
-                                <span>출발</span>
-                                <input></input>
-                            </div>
-                            <div>
-                                <span>도착</span>
-                                <input></input>
-                            </div>
-                            <button
-                                onClick={() => {
-                                    setPlaceSetting(false);
-                                }}
-                            >
-                                설정하기
-                            </button>
-                        </form>
+                        <div className="setting-text-wrapper">
+                            <span>출발</span>
+                            <input className="setting-input"></input>
+                        </div>
+                        <div className="setting-text-wrapper">
+                            <span>도착</span>
+                            <input className="setting-input"></input>
+                        </div>
+                        <button
+                            className="setting-btn"
+                            onClick={() => {
+                                setPlaceSetting(false);
+                            }}
+                        >
+                            설정하기
+                        </button>
                     </div>
                     <div className={scheduleSetting == true ? "settingBox scheduleBox" : "hidden"}>
-                        <form>
-                            <div>
-                                <span>출발</span>
-                                <input type="text" />
-                            </div>
-                            <div>
-                                <span>도착</span>
-                                <input type="text" />
-                            </div>
-                            <button
-                                onClick={() => {
-                                    setPlaceSetting(false);
+                        <div className="setting-text-wrapper">
+                            <div className="setting-text">출발</div>
+                            <DatePicker
+                                selected={inputStartDate}
+                                className="datepicker"
+                                onChange={(date) => {
+                                    let month = date.getMonth() + 1;
+                                    setStartDate(
+                                        `${date.getFullYear()}년 ${month}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`
+                                    );
+                                    setInputStartDate(date);
                                 }}
-                            >
-                                설정하기
-                            </button>
-                        </form>
+                                dateFormat="yyyy년 MM월 dd일 HH시 mm분"
+                                dateFormetCalendar="yyyy년 MM월"
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervalse={30}
+                                timeCaption="출발"
+                                placeholderText="출발 시각"
+                                locale="ko"
+                            />
+                        </div>
+                        <div className="setting-text-wrapper">
+                            <div className="setting-text">도착</div>
+                            <DatePicker
+                                selected={inputEndDate}
+                                className="datepicker"
+                                onChange={(date) => {
+                                    let month = date.getMonth() + 1;
+                                    setEndDate(
+                                        `${date.getFullYear()}년 ${month}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`
+                                    );
+                                    setInputEndDate(date);
+                                    console.log(month);
+                                }}
+                                dateFormat="yyyy년 MM월 dd일 HH시 mm분"
+                                dateFormetCalendar="yyyy년 MM월"
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervalse={30}
+                                timeCaption="도착"
+                                placeholderText="도착 시각"
+                                locale="ko"
+                            />
+                        </div>
+                        <button
+                            className="setting-btn"
+                            onClick={() => {
+                                setPlaceSetting(false);
+                            }}
+                        >
+                            설정하기
+                        </button>
                     </div>
                     <div className={postBtn == true ? "postBox" : "hidden"}>
                         <div

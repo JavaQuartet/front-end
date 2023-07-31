@@ -13,6 +13,7 @@ import "./stylesheet/App.scss";
 function App() {
     return (
         <div className="App">
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/club" element={<Club />} />

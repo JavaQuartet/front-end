@@ -13,7 +13,6 @@ function Club() {
     const [createOpen, setCreateOpen] = useState(false);
     return (
         <div>
-            <Navbar />
             <div className="club-background">
                 {/* 검색창 */}
                 <div className="search">
@@ -40,36 +39,32 @@ function Club() {
                     <p>모임만들기</p>
                 </div>
                 <div className="club-main">
-                    <ul>
-                        {clubList.map(() => {
-                            return (
-                                <li
-                                    onClick={() => {
-                                        setModalOpen(true);
-                                    }}
-                                >
-                                    <img
-                                        src={require("../img/club_example.jpg")}
-                                        alt="club_example"
-                                    />
-                                    <div>
-                                        <p className="club-title">함께 산책</p>
-                                        <p className="club-content">
-                                            동국대 주변 같이 걸으실 분 구해요
-                                        </p>
-                                        <div className="people">
-                                            <img
-                                                className="people-icon"
-                                                src={require("../img/people.png")}
-                                            />
-                                            <span className="people-text">2/5</span>
-                                            <span className="d-Day">D-1</span>
-                                        </div>
+                    {clubList.map(() => {
+                        return (
+                            <div
+                                className="club-item"
+                                onClick={() => {
+                                    setModalOpen(true);
+                                }}
+                            >
+                                <img src={require("../img/club_example.jpg")} alt="club_example" />
+                                <div>
+                                    <p className="club-title">함께 산책</p>
+                                    <p className="club-content">
+                                        동국대 주변 같이 걸으실 분 구해요
+                                    </p>
+                                    <div className="people">
+                                        <img
+                                            className="people-icon"
+                                            src={require("../img/people.png")}
+                                        />
+                                        <span className="people-text">2/5</span>
+                                        <span className="d-Day">D-1</span>
                                     </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
                 {modalOpen == true ? <Detail setModalOpen={setModalOpen} /> : null}
                 {createOpen == true ? <Create setCreateOpen={setCreateOpen} /> : null}
