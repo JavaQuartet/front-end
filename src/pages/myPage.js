@@ -4,13 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react";
-// import { useMediaQuery } from "react-responsive";
 
 function MyPage() {
 
   let navigate = useNavigate();
-
-  // let isFullScreen = useMediaQuery({minWidth: 1090});
 
   let [modal, setModal] = useState(false);
 

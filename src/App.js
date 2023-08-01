@@ -13,6 +13,7 @@ import Navbar from './components/navbar.js'
 
 //스타일시트 파일
 import "./stylesheet/App.scss";
+import MyPloggings from "./pages/myPloggings.js";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/club" element={<Club />} />
         <Route path="/community" element={<Community />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/myploggings" element={<MyPloggings />} />
       </Routes>
     </div>
