@@ -3,6 +3,8 @@
     height: $h;
 }
 
+$green: #1a780b;
+
 @mixin btwn($m, $p) {
     margin: $m;
     padding: $p;
