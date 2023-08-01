@@ -8,10 +8,11 @@ function Navbar() {
     return (
         <div className="Navbar">
             <p>
-                <Link to="/" style={{ textDecoration: "none", color: "#42D084" }}>
-                    plowithme
-                </Link>
-            </p>
+            <Link
+                to="/"
+                style={{ textDecoration: "none", color: "#42D084" }}
+            >plowithme
+            </Link></p>
             <div className="main-list">
                 <ul>
                     <li>

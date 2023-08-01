@@ -1,0 +1,72 @@
+$lg: 992px;
+$md: 768px;
+$sm: 576px;
+
+.my-ploggings {
+    margin-top: 70px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+
+    h1 {
+        float: left;
+    }
+
+    .types {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        float: right;
+        margin: 10px 0;
+
+        button {
+            background-color: #f2f2f2;
+            margin: 10px;
+            border: 0;
+            border-radius: 5px;
+            width: 200px;
+            height: 40px;
+            font-size: large;
+        }
+    }
+
+    .items-container {
+        display: grid;
+        clear: both;
+        width: 100%;
+        padding-top:20px;
+
+        grid-template-columns: 50% 50%;
+        @media (min-width: $sm) {
+            grid-template-columns: 33.33% 33.33% 33.33%;
+        }
+        @media (min-width: $lg) {
+            grid-template-columns: 25% 25% 25% 25%;
+        }
+
+        .item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin:10px 0;
+
+            img{
+                width:80%;
+                height: 250px;
+                border-radius: 10px;
+
+            }
+            p{
+                text-align: center;
+                margin:10px 0;
+            }
+        }
+
+
+    }
+
+
+
+
+}
