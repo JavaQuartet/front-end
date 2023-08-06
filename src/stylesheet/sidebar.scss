@@ -1,0 +1,26 @@
+.sidemenu {
+    right: 200px;
+    top: 220px;
+    height: 996px;
+    width: 79px;
+    box-sizing: border-box;
+    position: absolute;
+    background: #ffffff;
+    border: 1px solid #42d084;
+    border-radius: 10px;
+  
+    .post {
+      width: 40px;
+      height: 40px;
+      margin-top: 40px;
+      margin-left: 20px;
+    }
+    .photo {
+      width: 60px;
+      height: 60px;
+      border-radius: 30px;
+      margin-top: 30px;
+      margin-left: 10px;
+    }
+  }
+  

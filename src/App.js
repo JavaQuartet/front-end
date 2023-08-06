@@ -13,7 +13,7 @@ import ProfilePage from "./pages/profilepage.js"
 
 //스타일시트 파일
 import "./stylesheet/App.scss";
-import MyPloggings from "./pages/myPloggings.js";
+
 
 function App() {
   return (
