@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../stylesheet/myPloggings.scss'
-// import Detail from "../components/detail.js"
+import Detail from "../components/detail.js"
 
 
 
@@ -11,7 +11,7 @@ function MyPloggings() {
         <div className="my-ploggings">
 
       {
-        // logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
       }
                 <h1>Plogging Logs</h1>
                 <div className="types">

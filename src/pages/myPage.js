@@ -2,7 +2,7 @@ import React from "react";
 import "../stylesheet/myPage.scss";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import Detail from '../components/detail.js'
+import Detail from '../components/detail.js'
 
 function MyPage() {
 
@@ -17,7 +17,7 @@ function MyPage() {
   return (
     <div className="mypage-container">
       {
-        // logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
       }
       {
         modal ?
@@ -69,7 +69,15 @@ function MyPage() {
             <p onClick={() => { navigate('/myploggings') }}>전체보기</p>
           </div>
           <div className="logs-container">
-            <OneLog setLogModal={setLogModal}/><OneLog /><OneLog /><OneLog /><OneLog /><OneLog /><OneLog /><OneLog />
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
           </div>
         </div>
       </div>
@@ -84,7 +92,7 @@ function OneLog({setLogModal}) {
     }} className="one-log">
       <img alt="플로깅 사진" src="https://img.freepik.com/free-photo/recycle-concept-with-woman-collecting-trash_23-2147825501.jpg?size=626&ext=jpg&ga=GA1.2.1645765076.1690271831&semt=sph" />
       <p>환경을 사랑하는 사람들끼리~</p>
-    </div>
+    </div> 
   )
 
 }

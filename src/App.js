@@ -9,17 +9,14 @@ import Main from "./pages/main.js";
 import Settings from "./pages/settings.js"
 import Navbar from "./components/navbar.js"
 import MyPloggings from "./pages/myPloggings.js";
-import ProfilePage from "./pages/profilepage.js"
+
 
 //스타일시트 파일
 import "./stylesheet/App.scss";
-import MyPloggings from "./pages/myPloggings.js";
-
 function App() {
   return (
     <div className="App">
       <Navbar />
-      
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/club" element={<Club />} />
