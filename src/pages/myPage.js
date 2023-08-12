@@ -60,7 +60,7 @@ function MyPage() {
 
       <div className="right">
         <div>
-          <div className="info-circle"><h3>내가 수거한 쓰레기</h3><h1>3.4kg</h1></div>
+          <div className="info-circle"><h3>플로깅 참여 횟수</h3><h1>6회</h1></div>
           <div className="info-circle"><h3>총 플로깅한 거리</h3><h1>3.4km</h1></div>
         </div>
         <div className="my-plogging">
