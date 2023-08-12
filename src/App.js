@@ -13,6 +13,8 @@ import MyPloggings from "./pages/myPloggings.js";
 
 //스타일시트 파일
 import "./stylesheet/App.scss";
+
+
 function App() {
   return (
     <div className="App">
