@@ -11,7 +11,7 @@
     letter-spacing: $space;
 }
 
-.create-outside {
+.make-outside {
     z-index: 400;
     position: fixed;
     top: 0;
@@ -24,25 +24,27 @@
     background: rgba(0, 0, 0, 0.2);
 }
 
-.create-background {
+.make-background {
     position: absolute;
     top: 40%;
     left: 50%;
     width: 800px;
+    min-width: 700px;
+    min-height: 650px;
     height: 60%;
     background: #f5f5f5;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     margin-top: 7rem;
 
-    .create-title {
+    .make-title {
         margin-bottom: -5.5rem;
         margin-left: 3rem;
         p {
             @include fontSetting(#42d084, "inter", 30px, normal, 500, 150%, -0.55px);
         }
     }
-    .create-image {
+    .make-image {
         position: relative;
         float: left;
         .club-img {
@@ -59,13 +61,13 @@
         }
     }
 
-    .create-info {
+    .make-info {
         @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.176px);
         float: left;
         margin-left: 22%;
         margin-top: 12%;
         height: 60%;
-        .create-text {
+        .make-text {
             position: relative;
             margin-bottom: 1.5rem;
             display: flex;
@@ -129,7 +131,7 @@
         }
     }
 
-    .create-content {
+    .make-content {
         clear: both;
         position: relative;
         margin-top: 30rem;

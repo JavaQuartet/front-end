@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 import "../stylesheet/detail.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
@@ -12,14 +13,14 @@ const { kakao } = window;
 function Detail(props) {
     const [map, setMap] = useState(null);
     const [notice, setNotice] = useState([
-        "6시까지 모이세요 다들~",
-        "7시로 시간 변경됐습니다.",
-        "최종: 9시!!!",
-        "아아아",
-        "아아아",
-        "아아아",
-        "아아아",
-        "아아아",
+        "아무개",
+        "아무개",
+        "아무개",
+        "아무개",
+        "아무개",
+        "아무개",
+        "아무개",
+        "아무개",
     ]);
     const [placeSetting, setPlaceSetting] = useState(false);
     const [scheduleSetting, setScheduleSetting] = useState(false);
@@ -62,7 +63,7 @@ function Detail(props) {
                     >
                         X
                     </button>
-                    <div>강동PLOW</div>
+                    <div className="detail-title">강동PLOW</div>
                     <div className="profile">
                         <span>
                             <img className="profile-icon" src={require("../img/profile.jpg")} />
@@ -123,32 +124,34 @@ function Detail(props) {
                         </div>
                     </div>
                     <div className="detail-right">
-                        <p className="notice-font">공지</p>
-                        <div className="detail-board">
-                            <div className="detail-post important">
-                                <div className="img-frame">
-                                    <img src={require("../img/profile.jpg")} />
-                                </div>
-                                <p className="post-font">{notice[0]}</p>
+                        <div className="notice">
+                            <FontAwesomeIcon icon={faBullhorn} className="icon" />
+                            <div className="notice-text">
+                                <p>6시에 모이세용</p>
                             </div>
-                            {notice.map((res) => {
-                                return (
-                                    <div className="detail-post action">
-                                        <div className="img-frame">
-                                            <img src={require("../img/profile.jpg")} />
-                                        </div>
-                                        <p className="post-font">{res}</p>
-                                    </div>
-                                );
-                            })}
+                            <div
+                                className="detail-posting-btn"
+                                onClick={() => {
+                                    setPostBtn(!postBtn);
+                                }}
+                            >
+                                <img src={require("../img/posting.png")} />
+                            </div>
                         </div>
-                        <div
-                            className="detail-posting-btn"
-                            onClick={() => {
-                                setPostBtn(!postBtn);
-                            }}
-                        >
-                            <img src={require("../img/posting.png")} />
+                        <div className="user-board">
+                            <p className="notice-font">모임</p>
+                            <div className="detail-board">
+                                {notice.map((res) => {
+                                    return (
+                                        <div className="detail-post action">
+                                            <div className="img-frame">
+                                                <img src={require("../img/profile.jpg")} />
+                                            </div>
+                                            <p className="post-font">{res}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                     <div className={placeSetting == true ? "settingBox" : "hidden"}>
@@ -225,20 +228,15 @@ function Detail(props) {
                         </button>
                     </div>
                     <div className={postBtn == true ? "postBox" : "hidden"}>
-                        <div
+                        <button
                             className="exit-btn"
                             onClick={() => {
                                 setPostBtn(false);
                             }}
                         >
                             X
-                        </div>
+                        </button>
                         <form className="postWriting">
-                            <div className="notice-div">
-                                <input type="checkbox" id="cb" />
-                                <label for="cb"></label>
-                                <span className="notice-span">공지</span>
-                            </div>
                             <div className="posting-content">
                                 <span>내용</span>
                                 <input type="textarea" />
