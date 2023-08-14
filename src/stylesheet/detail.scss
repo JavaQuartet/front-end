@@ -14,7 +14,8 @@
     background: #fff;
     border-radius: 30px;
     width: 44%;
-    height: 65%;
+    height: 72%;
+    min-height: 450px;
 }
 
 @mixin left($w, $h) {
@@ -32,16 +33,21 @@
 
 .detail-background {
     position: absolute;
-    top: 40%;
+    top: 50%;
     left: 50%;
-    width: 1100px;
-    height: 90%;
+    width: 53%;
+    height: 80%;
+    min-width: 1080px;
+    min-height: 750px;
     background: #f5f5f5;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    margin-top: 7rem;
+    margin-top: 0;
     .detail-top {
+        height: 22%;
+        min-height: 170px;
         border-radius: 10px 10px 0px 0px;
+
         background: linear-gradient(
                 0deg,
                 rgba(255, 255, 255, 0.4) 0%,
@@ -53,8 +59,8 @@
         background-size: 100% 100%;
         button {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: -3%;
+            right: 1.5%;
             border: none;
             color: black;
             font-size: 25px;
@@ -68,33 +74,36 @@
 
         div {
             @include fontSetting(#000, "inter", 32px, normal, 500, 150%, -0.352px);
-            padding-top: 4rem;
-            padding-left: 2rem;
+            padding-top: 6%;
+            padding-left: 3%;
+            margin-bottom: -4.5%;
+            margin-top: -5%;
         }
 
         .profile {
-            margin-top: -2rem;
-            padding-bottom: 1rem;
+            margin-top: -5.5%;
+            margin-bottom: 0%;
+            height: 100%;
             @include fontSetting(#000, "inter", 18px, normal, 500, 150%, -0.176px);
 
             span {
                 vertical-align: middle;
-                padding-right: 1rem;
+                padding-right: 1.5%;
             }
 
             .people-icon {
-                width: 1.2rem;
-                height: 1.2rem;
-                margin-right: -0.9rem;
-                margin-top: 0.4rem;
+                width: 2%;
+                height: 20%;
+                margin-right: -1.5%;
+                margin-top: 0.7%;
             }
 
             .profile-icon {
-                width: 50px;
-                height: 50px;
+                width: 4.5%;
+                height: 45%;
                 border-radius: 70%;
                 overflow: hidden;
-                margin-right: -0.5rem;
+                margin-right: -0.8%;
             }
         }
     }
@@ -117,6 +126,7 @@
 
     .detail-right {
         @include detailSetting();
+        background: #f5f5f5;
         margin-left: 2rem;
         position: relative;
     }
@@ -139,14 +149,14 @@
             .title {
                 @include fontSetting(#000, "inter", 20px, normal, 500, 150%, -0.264px);
                 vertical-align: middle;
-                margin: 1rem 1rem 0.5rem 1.5rem;
+                margin: 7% 1rem 3.5% 1.5rem;
                 display: inline-block;
             }
 
             .content {
                 @include fontSetting(#000, "inter", 14px, normal, 500, 150%, -0.264px);
                 vertical-align: middle;
-                margin: 1rem 1rem 0.5rem 0.5rem;
+                margin: 7% 1rem 3.5% 0.5rem;
                 display: inline-block;
             }
         }
@@ -216,6 +226,36 @@
         }
     }
 
+    .notice {
+        width: 100%;
+        height: 10%;
+        background: #fff;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+        .icon {
+            width: 30px;
+            height: 30px;
+            margin: 0.8rem 1rem;
+            float: left;
+        }
+
+        .notice-text {
+            float: left;
+            margin-top: -0.4rem;
+            margin-left: -1rem;
+
+            p {
+                @include fontSetting(#000, "inter", 19px, normal, 500, 150%, -0.264px);
+            }
+        }
+    }
+    .user-board {
+        width: 100%;
+        height: 87.4%;
+        background: #fff;
+        padding-top: 0.05rem;
+        border-radius: 30px;
+    }
     .detail-board {
         width: 100%;
         height: 80%;
@@ -289,8 +329,8 @@
 
     .detail-posting-btn {
         position: absolute;
-        bottom: 0.5rem;
-        right: 0.5rem;
+        top: 2%;
+        right: 3%;
         img {
             width: 30px;
             height: 30px;
@@ -387,12 +427,12 @@
 }
 .postBox {
     position: absolute;
-    bottom: 6%;
-    right: 3.3%;
+    top: 19%;
+    right: 3.5%;
     background: #fff;
     width: 44%;
-    height: 13%;
-    border-radius: 0px 0px 30px 30px;
+    height: 7%;
+    border-radius: 20px;
     padding: 2rem;
     @include fontSetting(#1e1e1e, "inter", 18px, normal, 500, 150%, -0.176px);
     .exit-btn {
@@ -400,7 +440,8 @@
         position: absolute;
         top: 5%;
         right: 5%;
-
+        border: none;
+        background: #fff;
         &:hover {
             cursor: pointer;
         }
@@ -425,9 +466,8 @@
 
     .posting-content {
         @include fontSetting(#1e1e1e, "inter", 18px, normal, 500, 150%, -0.176px);
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         width: 160%;
-
         span {
             padding-right: 0.5rem;
         }
@@ -456,6 +496,7 @@
     .submit-btn {
         float: left;
     }
+    /*
     input[id="cb"] + label {
         padding-top: 0.5rem;
         display: inline-block;
@@ -472,6 +513,7 @@
     input[id="cb"] {
         display: none;
     }
+    */
 }
 
 .scheduleBox {

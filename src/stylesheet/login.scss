@@ -1,0 +1,65 @@
+@mixin fontSetting($color, $font, $size, $style, $w, $h, $space) {
+    color: $color;
+    font-family: $font;
+    font-size: $size;
+    font-style: $style;
+    font-weight: $w;
+    line-height: $h;
+    letter-spacing: $space;
+}
+
+* {
+    box-sizing: border-box;
+}
+.login-background {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    margin-top: 10%;
+    text-align: center;
+
+    p {
+        @include fontSetting(#42d084, "inter", 32px, normal, 500, 150%, -0.352px);
+        margin-bottom: 1rem;
+    }
+    .login-main {
+        width: 20%;
+        height: 300px;
+        margin: auto;
+        text-align: center;
+        border: 3px solid #42d084;
+        border-radius: 30px;
+        padding: 1.5rem 0.5rem;
+    }
+
+    .input-wrapper {
+        width: 100%;
+        margin-top: 1.5rem;
+        input {
+            border: none;
+            border-bottom: 1px solid grey;
+            outline: none;
+            padding: 0.5rem;
+            width: 80%;
+            @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.352px);
+        }
+
+        button {
+            margin-top: 0.5rem;
+            border: none;
+            border-radius: 10px;
+            background: #4bec97;
+            padding: 0.5rem;
+            width: 80%;
+            @include fontSetting(#000, "inter", 18px, normal, 500, 150%, -0.352px);
+        }
+    }
+
+    .question {
+        @include fontSetting(#000, "inter", 14px, normal, 500, 150%, -0.352px);
+        margin-right: 0.5rem;
+    }
+    .signUp {
+        @include fontSetting(#000, "inter", 12px, normal, 500, 150%, -0.352px);
+    }
+}

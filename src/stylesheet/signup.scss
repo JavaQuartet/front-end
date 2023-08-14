@@ -1,0 +1,78 @@
+@mixin fontSetting($color, $font, $size, $style, $w, $h, $space) {
+    color: $color;
+    font-family: $font;
+    font-size: $size;
+    font-style: $style;
+    font-weight: $w;
+    line-height: $h;
+    letter-spacing: $space;
+}
+
+* {
+    box-sizing: border-box;
+}
+.signup-background {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    margin-top: 7%;
+    text-align: center;
+
+    p {
+        @include fontSetting(#42d084, "inter", 32px, normal, 500, 150%, -0.352px);
+        margin-bottom: 1rem;
+    }
+    .signup-main {
+        width: 25%;
+        height: 600px;
+        margin: auto;
+        text-align: center;
+        border: 3px solid #42d084;
+        border-radius: 30px;
+        padding: 1.5rem 0rem;
+    }
+
+    .signup-info {
+        width: 100%;
+        margin: auto;
+        border-bottom: 3px solid #42d084;
+        padding: 1.5rem 0rem;
+        margin-bottom: 1rem;
+    }
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+        margin-top: 1.5rem;
+
+        .local-select {
+            position: absolute;
+            top: 15%;
+            right: 12%;
+
+            width: 80px;
+            height: 35px;
+            outline: none;
+            border-radius: 10px;
+        }
+        input {
+            border: none;
+            //border-bottom: 1px solid grey;
+            background: #f5f5f5;
+            border-radius: 10px;
+            outline: none;
+            padding: 0.8rem;
+            width: 80%;
+            @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.352px);
+        }
+
+        button {
+            margin-top: 0.5rem;
+            border: none;
+            border-radius: 10px;
+            background: #4bec97;
+            padding: 0.5rem;
+            width: 80%;
+            @include fontSetting(#000, "inter", 18px, normal, 500, 150%, -0.352px);
+        }
+    }
+}
