@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Detail from '../components/detail.js'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
+
 function MyPage() {
 
   let navigate = useNavigate();
@@ -13,9 +16,35 @@ function MyPage() {
 
   let [logModal, setLogModal] = useState(false); //Plogging log 모달
 
+  let [msgModal, setMsgModal] = useState(false);
+
+
 
   return (
     <div className="mypage-container">
+      <FontAwesomeIcon onClick={()=>{
+        setMsgModal(!msgModal);
+      }} className='alert' icon={faBell}/>
+      {
+        msgModal ?
+        <div className="msg-modal">
+          <div className="msg">
+            <div className="msg-content">
+            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
+            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
+            </div>
+          <hr />
+          </div>
+          <div className="msg">
+            <div className="msg-content">
+            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
+            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
+            </div>
+          <hr />
+          </div>
+        </div>
+        :null
+      }
       {
         logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
       }
@@ -103,36 +132,11 @@ export default MyPage;
 /* 
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 
-  // let [msgModal, setMsgModal] = useState(false);
 
 
-<FontAwesomeIcon onClick={()=>{
-        setMsgModal(!msgModal);
-      }} className='alert' icon={faBell}/>
-      {
-        msgModal ?
-        <div className="msg-modal">
-          <div className="msg">
-            <div className="msg-content">
-            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-            </div>
-          <hr />
-          </div>
-          <div className="msg">
-            <div className="msg-content">
-            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-            </div>
-          <hr />
-          </div>
-        </div>
-        :null
-      }
+
 
 
 
