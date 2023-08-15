@@ -2,7 +2,10 @@ import React from "react";
 import "../stylesheet/myPage.scss";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import Detail from '../components/detail.js'
+import Detail from '../components/detail.js'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 function MyPage() {
 
@@ -13,11 +16,37 @@ function MyPage() {
 
   let [logModal, setLogModal] = useState(false); //Plogging log 모달
 
+  let [msgModal, setMsgModal] = useState(false);
+
+
 
   return (
     <div className="mypage-container">
+      <FontAwesomeIcon onClick={()=>{
+        setMsgModal(!msgModal);
+      }} className='alert' icon={faBell}/>
       {
-        // logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        msgModal ?
+        <div className="msg-modal">
+          <div className="msg">
+            <div className="msg-content">
+            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
+            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
+            </div>
+          <hr />
+          </div>
+          <div className="msg">
+            <div className="msg-content">
+            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
+            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
+            </div>
+          <hr />
+          </div>
+        </div>
+        :null
+      }
+      {
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
       }
       {
         modal ?
@@ -60,7 +89,7 @@ function MyPage() {
 
       <div className="right">
         <div>
-          <div className="info-circle"><h3>내가 수거한 쓰레기</h3><h1>3.4kg</h1></div>
+          <div className="info-circle"><h3>플로깅 참여 횟수</h3><h1>6회</h1></div>
           <div className="info-circle"><h3>총 플로깅한 거리</h3><h1>3.4km</h1></div>
         </div>
         <div className="my-plogging">
@@ -69,7 +98,15 @@ function MyPage() {
             <p onClick={() => { navigate('/myploggings') }}>전체보기</p>
           </div>
           <div className="logs-container">
-            <OneLog setLogModal={setLogModal}/><OneLog /><OneLog /><OneLog /><OneLog /><OneLog /><OneLog /><OneLog />
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
+            <OneLog setLogModal={setLogModal}/>
           </div>
         </div>
       </div>
@@ -84,7 +121,7 @@ function OneLog({setLogModal}) {
     }} className="one-log">
       <img alt="플로깅 사진" src="https://img.freepik.com/free-photo/recycle-concept-with-woman-collecting-trash_23-2147825501.jpg?size=626&ext=jpg&ga=GA1.2.1645765076.1690271831&semt=sph" />
       <p>환경을 사랑하는 사람들끼리~</p>
-    </div>
+    </div> 
   )
 
 }
@@ -95,36 +132,11 @@ export default MyPage;
 /* 
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 
-  // let [msgModal, setMsgModal] = useState(false);
 
 
-<FontAwesomeIcon onClick={()=>{
-        setMsgModal(!msgModal);
-      }} className='alert' icon={faBell}/>
-      {
-        msgModal ?
-        <div className="msg-modal">
-          <div className="msg">
-            <div className="msg-content">
-            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-            </div>
-          <hr />
-          </div>
-          <div className="msg">
-            <div className="msg-content">
-            <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-            <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-            </div>
-          <hr />
-          </div>
-        </div>
-        :null
-      }
+
 
 
 
