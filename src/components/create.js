@@ -11,30 +11,30 @@ function Create(props) {
     const [endDate, setEndDate] = useState("");
     return (
         <div
-            className="create-outside"
+            className="make-outside"
             onClick={() => {
                 props.setCreateOpen(false);
             }}
         >
             <div
-                className="create-background"
+                className="make-background"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
             >
-                <div className="create-title">
+                <div className="make-title">
                     <p>plowithme</p>
                 </div>
-                <div className="create-image">
+                <div className="make-image">
                     <img src={require("../img/detail_example.jpg")} className="club-img" />
                     <img src={require("../img/setting.png")} className="setting-img" />
                 </div>
-                <div className="create-info">
-                    <div className="create-text">
+                <div className="make-info">
+                    <div className="make-text">
                         <span className="title">이름</span>
                         <input type="text" maxLength="8"></input>
                     </div>
-                    <div className="create-text">
+                    <div className="make-text">
                         <span className="title">출발</span>
                         <DatePicker
                             className="datepicker"
@@ -50,7 +50,7 @@ function Create(props) {
                             locale="ko"
                         />
                     </div>
-                    <div className="create-text">
+                    <div className="make-text">
                         <span className="title">도착</span>
                         <DatePicker
                             className="datepicker"
@@ -75,21 +75,21 @@ function Create(props) {
                         <span className="span-minute">분</span>
                     </div>
                      */}
-                    <div className="create-text">
+                    <div className="make-text">
                         <span className="title">장소</span>
                         <span className="span-start">출발</span>
                         <input type="text" className="place" maxLength="15"></input>
                     </div>
-                    <div className="create-text">
+                    <div className="make-text">
                         <span className="span-start">도착</span>
                         <input type="text" className="input-place place" maxLength="15"></input>
                     </div>
-                    <div className="create-text">
+                    <div className="make-text">
                         <span className="title">인원</span>
                         <input type="text" maxLength="8"></input>
                     </div>
                 </div>
-                <div className="create-content">
+                <div className="make-content">
                     <span>소개</span>
                     <input type="textarea" maxLength="20"></input>
                 </div>
