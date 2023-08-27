@@ -218,12 +218,7 @@ function Community() {
                       alt="club_example"
                       className="act"
                     />
-                    <div className="icon">
-                      <img
-                        className="comment-icon"
-                        src={require("../img/comment.png")}
-                      />
-                    </div>
+                    
                     <div className="footer">
                       <div className="comment">
                         <img
