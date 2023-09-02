@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 //컴포넌트
 import Navbar from "../components/navbar.js";
 import Detail from "../components/detail.js";
@@ -7,10 +7,56 @@ import Create from "../components/create.js";
 
 //스타일시트
 import "../stylesheet/club.scss";
-function Club() {
+function Club(props) {
+    const URL = "43.200.172.177:8080";
     const [clubList, setClubList] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
     const [modalOpen, setModalOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
+
+    const [token, setToken] = useState("");
+    const [tokenType, setTokenType] = useState("");
+
+    const getInfo = async () => {
+        const info = await axios
+            .post("http://43.200.172.177:8080/auth/login", {
+                email: "admin123@naver.com",
+                password: "admin123",
+            })
+            .then((result) => {
+                if (result.status === 200) {
+                    setToken(result.data.data.accessToken);
+                    setTokenType(result.data.data.tokenType);
+                    console.log(result.data.data.accessToken);
+                }
+            })
+            .catch((error) => {
+                if (error.status === 401) {
+                    console.log(error.message);
+                } else if (error.status === 400) {
+                    console.log(error.message);
+                }
+            });
+    };
+
+    const getList = async () => {
+        const list = await axios
+            .get("http://43.200.172.177:8080/me", {
+                headers: {
+                    Authorization:
+                        "Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJhZG1pbjEyM0BuYXZlci5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2OTMyODU4ODUsImV4cCI6MTY5Mzg5MDY4NX0.L3ynMbNnfY8RSvM-uzV7GJv9UbkHKewC7Md6aWjHVTg",
+                },
+            })
+            .then((result) => {
+                if (result.status === 200) {
+                    console.log(result);
+                }
+            })
+            .catch((error) => {
+                console.log(`${token}`);
+            });
+    };
+    useEffect(() => {}, []);
+
     return (
         <div>
             <div className="club-background">
@@ -69,6 +115,8 @@ function Club() {
                 {modalOpen == true ? <Detail setModalOpen={setModalOpen} /> : null}
                 {createOpen == true ? <Create setCreateOpen={setCreateOpen} /> : null}
             </div>
+            <button onClick={getInfo}>token</button>
+            <button onClick={getList}>get list</button>
         </div>
     );
 }
