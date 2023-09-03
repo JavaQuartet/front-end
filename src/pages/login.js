@@ -1,21 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 import "../stylesheet/login.scss";
 
 function Login() {
+
+    let [email, setEmail] = useState('');
+    let [pw, setPw] = useState('');
+
+    let fetchURL = 'http://43.200.172.177:8080';
+
+    let navigate = useNavigate();
+
     return (
         <div className="login-background">
             <p>Plowithme</p>
             <div className="login-main">
                 <div className="input-wrapper">
-                    <input placeholder="아이디" id="id" />
+                    <input onChange={(e)=>{
+                        setEmail(e.target.value);
+                    }} placeholder="아이디" id="id" />
                 </div>
                 <div className="input-wrapper">
-                    <input type="password" placeholder="패스워드" id="password" />
+                    <input onChange={(e)=>{
+                        setPw(e.target.value);
+                    }} type="password" placeholder="패스워드" id="password" />
                 </div>
                 <div className="input-wrapper">
-                    <button className="Login" type="button">
+                    <button onClick={(e)=>{
+                        console.log(email, pw);
+                        axios.post(fetchURL + '/auth/login', {
+                            email: email,
+                            password: pw
+                        }).then((result) => {
+                            console.log(result.data.data.accessToken);
+                            localStorage.setItem("accessToken", result.data.data.accessToken);
+                            navigate('/mypage')
+                        })
+                        .catch((e) => {
+                            if(e.response.status === 400){
+                                alert('이메일과 비밀번호를 확인해주세요!')
+                            }
+                            else if(e.response.status === 404){
+                                alert('존재하지 않는 회원입니다');
+                            }
+                        })
+                    }} className="Login" type="button">
                         로그인
                     </button>
                 </div>
