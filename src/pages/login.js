@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import "../stylesheet/login.scss";
 
-function Login() {
+function Login({ setUser }) {
 
     let [email, setEmail] = useState('');
     let [pw, setPw] = useState('');
@@ -12,6 +12,7 @@ function Login() {
     let fetchURL = 'http://43.200.172.177:8080';
 
     let navigate = useNavigate();
+
 
     return (
         <div className="login-background">
@@ -29,14 +30,28 @@ function Login() {
                 </div>
                 <div className="input-wrapper">
                     <button onClick={(e)=>{
-                        console.log(email, pw);
                         axios.post(fetchURL + '/auth/login', {
                             email: email,
                             password: pw
                         }).then((result) => {
-                            console.log(result.data.data.accessToken);
-                            localStorage.setItem("accessToken", result.data.data.accessToken);
-                            navigate('/mypage')
+                            let accessToken = result.data.data.accessToken; 
+                            sessionStorage.setItem("accessToken", accessToken);
+                            axios.get(fetchURL + "/me", {
+                                headers: {
+                                  Authorization: `Bearer ${accessToken}`
+                                }
+                              }).then((result) => {
+                                console.log(result.data);
+                                setUser({
+                                    isLogin:true,
+                                    id: result.data.data.id,
+                                    email: result.data.data.email,
+                                    name: result.data.data.name
+                                });
+                                navigate('/mypage');
+                              }).catch((e) => {
+                                alert(e.message);
+                              })
                         })
                         .catch((e) => {
                             if(e.response.status === 400){
