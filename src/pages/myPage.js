@@ -102,10 +102,10 @@ function MyPage({ user, setUser }) {
       let tmpArr;
       axios.get("https://picsum.photos/v2/list")
         .then((result) => {
-          // tmpArr = result.data.sort(()=> Math.random()-0.5);
-          tmpArr = result.data;
+          tmpArr = result.data.sort(()=> Math.random()-0.5);
+          // tmpArr = result.data;
           tmp.map((e, i) => {
-            e.imgUrl = tmpArr[10 + i].download_url;
+            e.imgUrl = tmpArr[i].download_url;
           })
           setLogs(tmp);
         })
@@ -171,11 +171,39 @@ function MyPage({ user, setUser }) {
         modal ?
           <div className="modal">
             <div className="profile-setting">
-              <img className="profile-image" alt='프로필 사진' src="https://slp-statics.astockcdn.net/static_assets/staging/23spring/kr/home/curated-collections/card-1.jpg?width=580&format=webp"></img>
-              <input className="nickname" value='닉네임' />
-              <input className="intro-msg" value="자기소개글(상태메시지)" />
+              <img className="profile-image" alt='프로필 사진' src={userInfo.profileUrl}></img>
+              <input className="nickname" id="new-nickname" defaultValue={userInfo.nickname} />
+              <input className="intro-msg" id="new-introduction" defaultValue={userInfo.introduction} />
               <div className="buttons">
-                <button onClick={() => { setModal(false); }}>저장</button>
+                <button onClick={() => { 
+                  let newData = {
+                    nickname: document.getElementById('new-nickname').value,
+                    introduction: document.getElementById('new-introduction').value
+                  }
+                  console.log(newData);
+                  axios.patch(fetchURL + `/users/${user.id}/profile`, newData, {
+                    headers: {
+                      Authorization: `Bearer ${accessToken}`
+                    }
+                  }).then((result)=>{
+                    axios.get(fetchURL + `/users/${user.id}/profile`, {
+                      headers: {
+                        Authorization: `Bearer ${accessToken}`
+                      }
+                    }).then((result) => {
+                      let tmp = result.data.data
+                      let newUserInfo = { ...userInfo };
+                      newUserInfo.nickname = tmp.nickname;
+                      newUserInfo.profileUrl = tmp.profile_url;
+                      newUserInfo.introduction = tmp.introduction;
+                      setUserInfo(newUserInfo);
+                    }).catch((e) => {
+                      alert(e.message);
+                    })
+                    setModal(false);
+                  }).catch((e)=>{
+                    alert(e.message);
+                  })}}>저장</button>
                 <button onClick={() => { setModal(false); }}>취소</button>
               </div>
             </div>
@@ -185,7 +213,7 @@ function MyPage({ user, setUser }) {
       }
       <div className="left">
         <img className="profile-image" alt='프로필 사진' src={userInfo.profileUrl}></img>
-        <h2>{user.name}</h2>
+        <h2>{userInfo.nickname}</h2>
         <div className="intro-msg">{userInfo.introduction}</div>
         <div className="follow-info">
           <p>팔로워</p>

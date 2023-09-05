@@ -20,14 +20,27 @@ function MyPloggings() {
         //나의 모임 조회
         axios.get(fetchURL + `/class/me?category=0`, {
             headers: {
-                Authorization: `Bearer ${accessToken}`
+              Authorization: `Bearer ${accessToken}`
             }
-        }).then((result) => {
+          }).then((result) => {
             let tmp = result.data.data;
-            setLogs(tmp);
-        }).catch((e) => {
+            let tmpArr;
+            axios.get("https://picsum.photos/v2/list")
+              .then((result) => {
+                tmpArr = result.data.sort(()=> Math.random()-0.5);
+                // tmpArr = result.data;
+                tmp.map((e, i) => {
+                  e.imgUrl = tmpArr[i].download_url;
+                })
+                setLogs(tmp);
+              })
+              .catch((e) => {
+                alert(e.message);
+              })
+          }).catch((e) => {
             alert(e.message);
-        })
+          })
+      
     }, [])
 
     useEffect(() => {
@@ -37,7 +50,19 @@ function MyPloggings() {
             }
         }).then((result) => {
             let tmp = result.data.data;
-            setLogs(tmp);
+            let tmpArr;
+            axios.get("https://picsum.photos/v2/list")
+              .then((result) => {
+                tmpArr = result.data.sort(()=> Math.random()-0.5);
+                // tmpArr = result.data;
+                tmp.map((e, i) => {
+                  e.imgUrl = tmpArr[i].download_url;
+                })
+                setLogs(tmp);
+              })
+              .catch((e) => {
+                alert(e.message);
+              })
         }).catch((e) => {
             alert(e.message);
         })
@@ -59,7 +84,7 @@ function MyPloggings() {
             <div className="items-container">
                 {
                     logs.map((e, i) => {
-                        return <OneItem element={e} key={i} setLogModal={setLogModal} />
+                        return <OneItem element={e} key={i} setLogModal={setLogModal}/>
                     })
                 }
             </div>
@@ -71,7 +96,7 @@ function OneItem({ setLogModal, element }) {
 
     return (
         <div onClick={() => { setLogModal(true); }} className="item">
-            <img width="100px" height="100px" src="https://img.freepik.com/free-photo/recycle-concept-with-woman-collecting-trash_23-2147825501.jpg?size=626&ext=jpg&ga=GA1.2.1645765076.1690271831&semt=sph" alt="플로깅 사진" />
+            <img width="100px" height="100px" src={element.imgUrl} alt="플로깅 사진" />
             <p>{element.title}</p>
         </div>
     )
