@@ -79,7 +79,6 @@ function Detail(props) {
     }, [startPlace]);
 
     useEffect(() => {
-        console.log("useEffect");
         setCoords(startPlaceInput, endPlaceInput);
     }, [startPlaceInput, endPlaceInput]);
 
@@ -96,7 +95,6 @@ function Detail(props) {
             })
             .then((result) => {
                 if (result.status === 200) {
-                    console.log(result);
                     setMakerName(result.data.data.nickname);
                 }
             })
@@ -107,8 +105,6 @@ function Detail(props) {
 
     //거리 계산 함수
     const getDistance = (lat1, lng1, lat2, lng2) => {
-        console.log(startPlaceInput);
-        console.log(endPlaceInput);
         function deg2rad(deg) {
             return deg * (Math.PI / 180);
         }
@@ -126,13 +122,11 @@ function Detail(props) {
 
         //setDistance(d);
         distance = d;
-        console.log(d);
         return d;
     };
 
     //주소로 좌표 얻어오기
     const setCoords = (start, end) => {
-        console.log("setcoords");
         const geocoder = new kakao.maps.services.Geocoder();
         geocoder.addressSearch(`${start}`, function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
@@ -144,14 +138,11 @@ function Detail(props) {
                 setEndCoords({ y: result[0].y, x: result[0].x });
             }
         });
-        console.log(startCoords.y + " " + startCoords.x + " " + endCoords.y + " " + endCoords.x);
         getDistance(startCoords.y, startCoords.x, endCoords.y, endCoords.x);
     };
 
     //위치 수정
     const ModifyPlace = () => {
-        console.log("modify");
-        console.log(distance);
         setDistanceText(distance.toString());
         axios
             .patch(
@@ -171,7 +162,6 @@ function Detail(props) {
             )
             .then((result) => {
                 if (result.status === 200) {
-                    console.log("수정완료");
                     console.log(result);
                 }
             })
@@ -202,7 +192,6 @@ function Detail(props) {
             )
             .then((result) => {
                 if (result.status === 200) {
-                    console.log("수정완료");
                     console.log(result);
                 }
             })
@@ -230,7 +219,6 @@ function Detail(props) {
             )
             .then((result) => {
                 if (result.status === 200) {
-                    console.log("수정완료");
                     console.log(result);
                 }
             })
@@ -288,7 +276,6 @@ function Detail(props) {
                 if (result.status === 200) {
                     alert("모임 나가기 완료!");
                     window.location.replace("/");
-                    console.log(result);
                 }
             })
             .catch((error) => {
@@ -317,7 +304,6 @@ function Detail(props) {
                 if (result.status === 200) {
                     alert("모임 종료 완료!");
                     navigate("/community");
-                    console.log(result);
                 }
             })
             .catch((error) => {
@@ -347,7 +333,6 @@ function Detail(props) {
                 if (result.status === 200) {
                     alert("모임 삭제 완료!");
                     window.location.replace("/");
-                    console.log(result);
                 }
             })
             .catch((error) => {
@@ -370,7 +355,6 @@ function Detail(props) {
         let gap = today.getTime() - day.getTime();
         let result = Math.ceil(gap / (1000 * 60 * 60 * 24)) - 1;
 
-        console.log(result);
         return result;
     };
 
@@ -418,19 +402,16 @@ function Detail(props) {
                 //참여한 모임
                 console.log(result);
                 if (result.status === 200) {
-                    console.log(result);
                     setIsJoin(1);
                     setDetail(result);
                 }
                 //참여안한 모임
                 else if (result.status === 201) {
-                    console.log(result);
                     setIsJoin(0);
                     setDetail(result);
                 }
                 //내가 만든 모임
                 else if (result.status === 202) {
-                    console.log(result);
                     setIsJoin(2);
                     setDetail(result);
                 }

@@ -29,12 +29,12 @@ function Club(props) {
 
     const [maker, setMaker] = useState(0);
     useEffect(() => {
-        getSearchList();
+        getList();
     }, [search]);
 
     useEffect(() => {
         getImage();
-        getSearchList();
+        getList();
     }, []);
 
     const getImage = () => {
@@ -44,55 +44,35 @@ function Club(props) {
             )
             .then((res) => {
                 setImg(res.data.hits);
-                console.log(img);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
-    //D-Day 계산 함수
-    const getDDay = (clubList) => {
-        let today = new Date();
 
-        for (var i = 0; i < clubList.length; i++) {
-            let day = new Date(
-                clubList[i].start_year,
-                clubList[i].start_month,
-                clubList[i].start_day
-            );
-            let gap = today.getTime() - day.getTime();
-            let result = Math.ceil(gap / (1000 * 60 * 60 * 24));
-
-            let str;
-            if (result < 0) {
-                str = result.toString();
-            } else {
-                str = "+" + result.toString();
-            }
-            let l = [...dDay];
-            l.push(str);
-            setDDay(l);
-        }
-        console.log(dDay);
-    };
-
-    const getSearchList = async () => {
-        console.log(search);
+    const getList = () => {
         if (search === "") {
             axios
-                .get("http://43.200.172.177:8080/class", {
+                .get("http://43.200.172.177:8080/class/region", {
                     headers: {
                         Authorization: `Bearer ${token}`,
+                    },
+                    params: {
+                        page: null,
+                        size: 20,
                     },
                 })
                 .then((result) => {
                     if (result.status === 200) {
-                        console.log(result);
                         setClubList(result.data.data);
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (error.status === 401) {
+                        console.log("권한없음");
+                    } else if (error.status === 400) {
+                        console.log("잘못 요청");
+                    }
                 });
         } else {
             axios
@@ -108,12 +88,15 @@ function Club(props) {
                 })
                 .then((result) => {
                     if (result.status === 200) {
-                        console.log(result);
                         setClubList(result.data.data);
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    if (error.status === 401) {
+                        console.log("권한없음");
+                    } else if (error.status === 400) {
+                        console.log("잘못 요청");
+                    }
                 });
         }
     };
