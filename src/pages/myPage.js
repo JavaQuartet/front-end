@@ -93,7 +93,7 @@ function MyPage({ user, setUser }) {
     })
 
     //나의 모임 조회
-    axios.get(fetchURL + `/class/me?category=1`, {
+    axios.get(fetchURL + `/class/me?category=0`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -106,6 +106,23 @@ function MyPage({ user, setUser }) {
 
   }, []);
 
+  let [msgs, setMsgs] = useState([]);
+  useEffect(() => {
+    if (msgModal) {
+      axios.get(fetchURL + '/messages/received', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }).then((result) => {
+        let tmp = result.data.data;
+        console.log(tmp);
+        setMsgs(tmp);
+      }).catch((e) => {
+        alert(e.message);
+      })
+    }
+  }, [msgModal])
+
 
   return (
     <div className="mypage-container">
@@ -115,20 +132,21 @@ function MyPage({ user, setUser }) {
       {
         msgModal ?
           <div className="msg-modal">
-            <div className="msg">
-              <div className="msg-content">
-                <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-                <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-              </div>
-              <hr />
-            </div>
-            <div className="msg">
-              <div className="msg-content">
-                <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-                <p>tmdwn님이 댓글을 남겼습니다 "안녕하세요!"</p>
-              </div>
-              <hr />
-            </div>
+            {
+              msgs.length > 0 ?
+                msgs.map((e, i) => {
+
+                  return (
+                    <div key={i} className="msg">
+                      <div className="msg-content">
+                        <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
+                        <p>tmdwn님이 쪽지를 보냈습니다 "안녕하세요!"</p>
+                      </div>
+                      <hr />
+                    </div>
+                  )
+                }) : <p className="empty">받은 쪽지가 없습니다!</p>
+            }
           </div>
           : null
       }
@@ -197,7 +215,6 @@ function MyPage({ user, setUser }) {
             {
               logs.length > 0 ?
                 logs.map((e, i) => {
-                  console.log(e);
                   return <OneLog title={e.title} key={i} setLogModal={setLogModal} />;
                 })
                 : <p>모임에 참여해주세요!</p>

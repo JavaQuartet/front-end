@@ -12,6 +12,7 @@ function SignUp() {
     let [name, setName] = useState('');
     let [pw, setPw] = useState('');
     let [email, setEmail] = useState('');
+    let [pw2, setPw2] = useState('');
 
     const [startDate, setStartDate] = useState(new Date());
     const [openPostcode, setOpenPostcode] = useState(false);
@@ -69,22 +70,31 @@ function SignUp() {
                 <input onChange={(e)=>{
                     setPw(e.target.value);
                 }} type="password" placeholder="패스워드" id="password" />
-                <input type="password" placeholder="패스워드 확인" id="password" />
+                <input onChange={(e)=>{
+                    setPw2(e.target.valie);
+                }} type="password" placeholder="패스워드 확인" id="password" />
                 <button onClick={() => {
                     //pw 두번 확인 안함뇨
-                    let newUser = {
-                        name: name,
-                        birth: startDate.toDateString(),
-                        password: pw,
-                        email: email,
-                        region: region
+                    if(pw !== pw2){
+                        alert('비밀번호를 확인 해주세요!');
                     }
-                    axios.post(fetchURL + '/auth/sign-up', newUser)
-                    .then((result)=>{
-                        console.log(result.data);
-                        navigate('/login');
-                    })
-                    console.log(newUser);
+                    else{
+                        let newUser = {
+                            name: name,
+                            birth: startDate.toDateString(),
+                            password: pw,
+                            email: email,
+                            region: region
+                        }
+                        axios.post(fetchURL + '/auth/sign-up', newUser)
+                        .then((result)=>{
+                            console.log(result.data);
+                            navigate('/login');
+                        })
+                        .catch((e)=>{
+                            alert(e.message);
+                        })
+                    }
                 }} className="login" type="button">
                     회원가입
                 </button>
