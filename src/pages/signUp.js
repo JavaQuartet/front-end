@@ -74,7 +74,6 @@ function SignUp() {
                     setPw2(e.target.valie);
                 }} type="password" placeholder="패스워드 확인" id="password" />
                 <button onClick={() => {
-                    //pw 두번 확인 안함뇨
                     if(pw !== pw2){
                         alert('비밀번호를 확인 해주세요!');
                     }
@@ -88,7 +87,7 @@ function SignUp() {
                         }
                         axios.post(fetchURL + '/auth/sign-up', newUser)
                         .then((result)=>{
-                            console.log(result.data);
+                            alert('회원가입 되었습니다. 새롭게 로그인해주세요!')
                             navigate('/login');
                         })
                         .catch((e)=>{

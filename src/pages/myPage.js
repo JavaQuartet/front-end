@@ -99,12 +99,26 @@ function MyPage({ user, setUser }) {
       }
     }).then((result) => {
       let tmp = result.data.data;
-      setLogs(tmp);
+      let tmpArr;
+      axios.get("https://picsum.photos/v2/list")
+        .then((result) => {
+          // tmpArr = result.data.sort(()=> Math.random()-0.5);
+          tmpArr = result.data;
+          tmp.map((e, i) => {
+            e.imgUrl = tmpArr[10 + i].download_url;
+          })
+          setLogs(tmp);
+        })
+        .catch((e) => {
+          alert(e.message);
+        })
     }).catch((e) => {
       alert(e.message);
     })
 
   }, []);
+
+
 
   let [msgs, setMsgs] = useState([]);
   useEffect(() => {
@@ -215,7 +229,7 @@ function MyPage({ user, setUser }) {
             {
               logs.length > 0 ?
                 logs.map((e, i) => {
-                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} />;
+                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl} />;
                 })
                 : <p>모임에 참여해주세요!</p>
             }
@@ -226,12 +240,13 @@ function MyPage({ user, setUser }) {
   );
 }
 
-function OneLog({ setLogModal, title }) {
+function OneLog({ setLogModal, title, imgUrl }) {
+
   return (
     <div onClick={() => {
       setLogModal(true);
     }} className="one-log">
-      <img alt="플로깅 사진" src="https://img.freepik.com/free-photo/recycle-concept-with-woman-collecting-trash_23-2147825501.jpg?size=626&ext=jpg&ga=GA1.2.1645765076.1690271831&semt=sph" />
+      <img alt="플로깅 사진" src={imgUrl} />
       <p>{title}</p>
     </div>
   )

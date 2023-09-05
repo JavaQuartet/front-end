@@ -29,12 +29,12 @@ function App() {
             <Navbar />
 
             <Routes>
-                <Route path="/" element={<Login setUser={setUser} />} />
+                <Route path="/" element={<Community />} />
                 <Route path="/club" element={<Club />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/mypage" element={<MyPage user={user} setUser={setUser} />} />
                 <Route path="/myploggings" element={<MyPloggings />} />
-                <Route path="/settings" element={<Settings />} />
+                <Route path="/settings" element={<Settings user={user} setUser={setUser}/>} />
                 <Route path="/login" element={<Login setUser={setUser}/>} />
                 <Route path="/signup" element={<SignUp />} />
             </Routes>
