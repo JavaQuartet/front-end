@@ -13,8 +13,6 @@ const { kakao } = window;
 function Create(props) {
     const URL = "http://43.200.172.177:8080";
 
-    const [classImageURL, setClassImageURL] = useState(require("../img/classImg.png"));
-    const [classImageFile, setClassImageFile] = useState(null);
     const [postModalOpen, setPostModalOpen] = useState(false);
 
     const [title, setTitle] = useState("");
