@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 //컴포넌트
 import Navbar from "../components/navbar.js";
 import Detail from "../components/detail.js";
@@ -9,53 +10,113 @@ import Create from "../components/create.js";
 import "../stylesheet/club.scss";
 function Club(props) {
     const URL = "43.200.172.177:8080";
-    const [clubList, setClubList] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+    const API_URL = "https://pixabay.com/api";
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const navigate = useNavigate();
+    const token = sessionStorage.getItem("accessToken");
+
+    const [img, setImg] = useState([]);
+    const [clubList, setClubList] = useState([]);
+    const [classNo, setClassNo] = useState(0);
+
+    const [search, setSearch] = useState("");
+    const [searchInput, setSearchInput] = useState("");
+
     const [modalOpen, setModalOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
 
-    const [token, setToken] = useState("");
-    const [tokenType, setTokenType] = useState("");
+    const [dDay, setDDay] = useState([]);
 
-    const getInfo = async () => {
-        const info = await axios
-            .post("http://43.200.172.177:8080/auth/login", {
-                email: "admin123@naver.com",
-                password: "admin123",
+    const [maker, setMaker] = useState(0);
+    useEffect(() => {
+        getSearchList();
+    }, [search]);
+
+    useEffect(() => {
+        getImage();
+        getSearchList();
+    }, []);
+
+    const getImage = () => {
+        axios
+            .get(
+                `${API_URL}/?key=${API_KEY}&lang=ko&image_type=photo&category=travel&per_page=100&safesearch=true&order=popular`
+            )
+            .then((res) => {
+                setImg(res.data.hits);
+                console.log(img);
             })
-            .then((result) => {
-                if (result.status === 200) {
-                    setToken(result.data.data.accessToken);
-                    setTokenType(result.data.data.tokenType);
-                    console.log(result.data.data.accessToken);
-                }
-            })
-            .catch((error) => {
-                if (error.status === 401) {
-                    console.log(error.message);
-                } else if (error.status === 400) {
-                    console.log(error.message);
-                }
+            .catch((err) => {
+                console.log(err);
             });
     };
+    //D-Day 계산 함수
+    const getDDay = (clubList) => {
+        let today = new Date();
 
-    const getList = async () => {
-        const list = await axios
-            .get("http://43.200.172.177:8080/me", {
-                headers: {
-                    Authorization:
-                        "Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJhZG1pbjEyM0BuYXZlci5jb20iLCJyb2xlcyI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE2OTMyODU4ODUsImV4cCI6MTY5Mzg5MDY4NX0.L3ynMbNnfY8RSvM-uzV7GJv9UbkHKewC7Md6aWjHVTg",
-                },
-            })
-            .then((result) => {
-                if (result.status === 200) {
-                    console.log(result);
-                }
-            })
-            .catch((error) => {
-                console.log(`${token}`);
-            });
+        for (var i = 0; i < clubList.length; i++) {
+            let day = new Date(
+                clubList[i].start_year,
+                clubList[i].start_month,
+                clubList[i].start_day
+            );
+            let gap = today.getTime() - day.getTime();
+            let result = Math.ceil(gap / (1000 * 60 * 60 * 24));
+
+            let str;
+            if (result < 0) {
+                str = result.toString();
+            } else {
+                str = "+" + result.toString();
+            }
+            let l = [...dDay];
+            l.push(str);
+            setDDay(l);
+        }
+        console.log(dDay);
     };
-    useEffect(() => {}, []);
+
+    const getSearchList = async () => {
+        console.log(search);
+        if (search === "") {
+            axios
+                .get("http://43.200.172.177:8080/class", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((result) => {
+                    if (result.status === 200) {
+                        console.log(result);
+                        setClubList(result.data.data);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            axios
+                .get("http://43.200.172.177:8080/class/search", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    params: {
+                        page: null,
+                        size: 20,
+                        keyword: search,
+                    },
+                })
+                .then((result) => {
+                    if (result.status === 200) {
+                        console.log(result);
+                        setClubList(result.data.data);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
 
     return (
         <div>
@@ -63,15 +124,80 @@ function Club(props) {
                 {/* 검색창 */}
                 <div className="search">
                     <form>
-                        <input type="text" placeholder="지역을 입력해주세요." />
-                        <button>
+                        <input
+                            type="text"
+                            placeholder="지역을 입력해주세요."
+                            onChange={(e) => {
+                                setSearchInput(e.target.value);
+                                e.preventDefault();
+                            }}
+                        />
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setSearch(searchInput);
+                            }}
+                        >
                             <img src={require("../img/search.png")} alt="search" />
                         </button>
                     </form>
                     <div className="tag">
-                        <span># 동국대</span>
-                        <span># 강동구</span>
-                        <span># 미사</span>
+                        <span
+                            onClick={() => {
+                                setSearch("서울");
+                            }}
+                        >
+                            # 서울
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("경기");
+                            }}
+                        >
+                            # 경기
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("인천");
+                            }}
+                        >
+                            # 인천
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("전라");
+                            }}
+                        >
+                            # 전라
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("강원");
+                            }}
+                        >
+                            # 강원
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("경상");
+                            }}
+                        >
+                            # 경상
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("전라");
+                            }}
+                        >
+                            # 전라
+                        </span>
+                        <span
+                            onClick={() => {
+                                setSearch("부산");
+                            }}
+                        >
+                            # 부산
+                        </span>
                     </div>
                 </div>
                 {/* 모임만들기 버튼 */}
@@ -85,38 +211,53 @@ function Club(props) {
                     <p>모임만들기</p>
                 </div>
                 <div className="club-main">
-                    {clubList.map(() => {
+                    {clubList.map((n, i) => {
+                        let placeStr =
+                            clubList[i].startRegion.split(" ")[0] +
+                            " " +
+                            clubList[i].startRegion.split(" ")[1];
                         return (
                             <div
                                 className="club-item"
                                 onClick={() => {
+                                    setClassNo(clubList[i].class_Id);
+                                    setMaker(clubList[i].maker_id);
                                     setModalOpen(true);
+                                    /*
+                                    navigate(`/detail/${clubList[i].classParticipantsEntityList[0].participant_id}
+                                    `);
+                                    */
                                 }}
                             >
-                                <img src={require("../img/club_example.jpg")} alt="club_example" />
+                                <img src={`${img[i].previewURL}`} />
                                 <div>
-                                    <p className="club-title">함께 산책</p>
-                                    <p className="club-content">
-                                        동국대 주변 같이 걸으실 분 구해요
-                                    </p>
+                                    <p className="club-title">{clubList[i].title}</p>
+                                    <p className="club-content">{clubList[i].description}</p>
                                     <div className="people">
                                         <img
                                             className="people-icon"
                                             src={require("../img/people.png")}
                                         />
-                                        <span className="people-text">2/5</span>
-                                        <span className="d-Day">D-1</span>
+                                        <span className="people-text">
+                                            {clubList[i].member_current}/{clubList[i].member_max}
+                                        </span>
+                                        <span className="place">{placeStr}</span>
                                     </div>
                                 </div>
                             </div>
                         );
                     })}
                 </div>
-                {modalOpen == true ? <Detail setModalOpen={setModalOpen} /> : null}
-                {createOpen == true ? <Create setCreateOpen={setCreateOpen} /> : null}
+                {modalOpen == true ? (
+                    <Detail
+                        setModalOpen={setModalOpen}
+                        classNo={classNo}
+                        token={token}
+                        maker={maker}
+                    />
+                ) : null}
+                {createOpen == true ? <Create setCreateOpen={setCreateOpen} token={token} /> : null}
             </div>
-            <button onClick={getInfo}>token</button>
-            <button onClick={getList}>get list</button>
         </div>
     );
 }

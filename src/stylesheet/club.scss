@@ -116,7 +116,7 @@
 
     .club-main {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         grid-gap: 3rem 0rem;
         justify-content: center;
         justify-items: center;
@@ -124,13 +124,15 @@
         width: 90vw;
         margin: 0 5vw;
         margin-top: 6rem;
+        margin-bottom: 6rem;
         .club-item {
-            width: 16.5rem;
+            width: 18rem;
             height: 10rem;
             border-radius: 10px;
             background: #f5f5f5;
+            position: relative;
             img {
-                width: 50%;
+                width: 45%;
                 border-radius: 10px;
                 height: 100%;
                 float: left;
@@ -138,24 +140,28 @@
 
             .club-title {
                 @include club-list(8.5rem);
-                font-size: 16px;
+                font-size: 15px;
                 text-align: center;
             }
 
             .club-content {
                 @include club-list(9rem);
+                margin-right: 0.5rem;
                 font-size: 14px;
+                text-align: center;
             }
 
             .people {
                 @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.175px);
-                margin-top: 2rem;
-
+                position: relative;
+                margin-top: 3.5rem;
                 .people-icon {
+                    position: absolute;
                     width: 1.2rem;
                     height: 1.2rem;
                     margin-top: 0.2rem;
-                    margin-left: 0.2rem;
+                    top: 180%;
+                    left: 47%;
                 }
 
                 span {
@@ -163,11 +169,16 @@
                 }
 
                 .people-text {
-                    padding-left: 0.2rem;
+                    position: absolute;
+                    top: 180%;
+                    left: 54%;
                 }
 
-                .d-Day {
-                    padding-left: 3rem;
+                .place {
+                    position: absolute;
+                    font-size: 12px;
+                    top: 180%;
+                    right: 2%;
                 }
             }
 
