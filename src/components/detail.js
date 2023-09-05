@@ -65,10 +65,23 @@ function Detail(props) {
     const [endCoords, setEndCoords] = useState({ y: 0, x: 0 });
 
     //거리
-    const [distance, setDistance] = useState(0);
-
+    //let [distance, setDistance] = useState(0);
     //modal 핸들러
     const [postModalOpen, setPostModalOpen] = useState(false);
+    let distance = 0;
+    const [distanceText, setDistanceText] = useState(0);
+    useEffect(() => {
+        getMaker();
+        getClass();
+    }, []);
+    useEffect(() => {
+        showMap();
+    }, [startPlace]);
+
+    useEffect(() => {
+        console.log("useEffect");
+        setCoords(startPlaceInput, endPlaceInput);
+    }, [startPlaceInput, endPlaceInput]);
 
     //모임 만든사람 정보
     const getMaker = () => {
@@ -92,18 +105,121 @@ function Detail(props) {
             });
     };
 
+    //거리 계산 함수
+    const getDistance = (lat1, lng1, lat2, lng2) => {
+        console.log(startPlaceInput);
+        console.log(endPlaceInput);
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2 - lat1); // deg2rad below
+        var dLon = deg2rad(lng2 - lng1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) *
+                Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = Math.round(R * c * 100) / 100; // Distance in km
+
+        //setDistance(d);
+        distance = d;
+        console.log(d);
+        return d;
+    };
+
+    //주소로 좌표 얻어오기
+    const setCoords = (start, end) => {
+        console.log("setcoords");
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(`${start}`, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setStartCoords({ y: result[0].y, x: result[0].x });
+            }
+        });
+        geocoder.addressSearch(`${end}`, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setEndCoords({ y: result[0].y, x: result[0].x });
+            }
+        });
+        console.log(startCoords.y + " " + startCoords.x + " " + endCoords.y + " " + endCoords.x);
+        getDistance(startCoords.y, startCoords.x, endCoords.y, endCoords.x);
+    };
+
     //위치 수정
     const ModifyPlace = () => {
+        console.log("modify");
+        console.log(distance);
+        setDistanceText(distance.toString());
         axios
             .patch(
                 `http://43.200.172.177:8080/class/${props.classNo}`,
                 {
-                    data: {
-                        classId: props.classNo,
-                        startRegion: startPlaceInput,
-                        end_region: endPlaceInput,
-                        distance: distance,
+                    classId: props.classNo,
+                    startRegion: startPlaceInput,
+                    end_region: endPlaceInput,
+                    distance: distance,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${props.token}`,
+                        "Content-Type": "application/json",
                     },
+                }
+            )
+            .then((result) => {
+                if (result.status === 200) {
+                    console.log("수정완료");
+                    console.log(result);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    //일정 수정
+    const ModifySchedule = () => {
+        axios
+            .patch(
+                `http://43.200.172.177:8080/class/${props.classNo}`,
+                {
+                    classId: props.classNo,
+                    start_date: startDate,
+                    end_date: endDate,
+                    start_year: year,
+                    start_month: month,
+                    start_day: date,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${props.token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((result) => {
+                if (result.status === 200) {
+                    console.log("수정완료");
+                    console.log(result);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    //공지 수정
+    const ModifyNotice = () => {
+        console.log(notice);
+        axios
+            .patch(
+                `http://43.200.172.177:8080/class/notice/${props.classNo}`,
+                {
+                    classId: props.classNo,
+                    notice: notice,
                 },
                 {
                     headers: {
@@ -133,6 +249,7 @@ function Detail(props) {
                 {
                     headers: {
                         Authorization: `Bearer ${props.token}`,
+                        "Content-Type": "application/json",
                     },
                 }
             )
@@ -163,6 +280,7 @@ function Detail(props) {
                 {
                     headers: {
                         Authorization: `Bearer ${props.token}`,
+                        "Content-Type": "application/json",
                     },
                 }
             )
@@ -208,6 +326,8 @@ function Detail(props) {
                 }
             });
     };
+
+    //모임 삭제
     const deleteClass = () => {
         axios
             .delete(
@@ -235,7 +355,6 @@ function Detail(props) {
             });
     };
     //D-Day 계산 함수
-
     const getDDayStr = (result) => {
         let str;
         if (result < 0) {
@@ -253,41 +372,6 @@ function Detail(props) {
 
         console.log(result);
         return result;
-    };
-
-    //거리 계산 함수
-    const getDistance = (lat1, lng1, lat2, lng2) => {
-        function deg2rad(deg) {
-            return deg * (Math.PI / 180);
-        }
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2 - lat1); // deg2rad below
-        var dLon = deg2rad(lng2 - lng1);
-        var a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) *
-                Math.cos(deg2rad(lat2)) *
-                Math.sin(dLon / 2) *
-                Math.sin(dLon / 2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = Math.round((R * c * 100) / 100); // Distance in km
-        return d;
-    };
-
-    //주소로 좌표 얻어오기
-    const setCoords = (start, end) => {
-        const geocoder = new kakao.maps.services.Geocoder();
-        geocoder.addressSearch(`${start}`, function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                setStartCoords({ y: result[0].y, x: result[0].x });
-            }
-        });
-        geocoder.addressSearch(`${end}`, function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                setEndCoords({ y: result[0].y, x: result[0].x });
-            }
-        });
-        setDistance(getDistance(startCoords.y, startCoords.x, endCoords.y, endCoords.x));
     };
 
     const setDetail = (result) => {
@@ -319,7 +403,8 @@ function Detail(props) {
                 result.data.data.start_day
             )
         );
-        setDistance(result.data.data.distance);
+        //setDistance(result.data.data.distance);
+        setDistanceText(result.data.data.distance);
     };
     //상세 페이지 정보 요청
     const getClass = async () => {
@@ -383,18 +468,6 @@ function Detail(props) {
         setMap(kakaoMap);
     };
 
-    useEffect(() => {
-        getMaker();
-        getClass();
-    }, []);
-    useEffect(() => {
-        showMap();
-    }, [startPlace]);
-
-    useEffect(() => {
-        setCoords(startPlace, endPlace);
-    }, [startPlace, endPlace]);
-
     return (
         <div
             className="detail-outside"
@@ -451,7 +524,7 @@ function Detail(props) {
                                     <p className="content">{endPlace}</p>
                                 </div>
                             </div>
-                            <div className="detail-distance">{distance}Km</div>
+                            <div className="detail-distance">{distanceText}Km</div>
                             <div
                                 className="setting"
                                 onClick={() => {
@@ -497,14 +570,16 @@ function Detail(props) {
                             </div>
                         </div>
                         <div className="user-board">
-                            <p className="notice-font">모임</p>
+                            <p className="notice-font">멤버</p>
                             <div className="detail-board">
                                 {participant.map((res, i) => {
                                     return (
                                         <div className="detail-post action">
-                                            <div className="img-frame">
+                                            {/*
+                                                <div className="img-frame">
                                                 <img src={require("../img/profile.jpg")} />
-                                            </div>
+                                                </div>
+                                            */}
                                             <p className="post-font">
                                                 {participant[i].user_nickname}
                                             </p>
@@ -564,6 +639,9 @@ function Detail(props) {
                                     let start = `${date.getFullYear()}년 ${month}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
                                     setStartDateInput(date);
                                     setStartDate(start);
+                                    setYear(date.getFullYear());
+                                    setMonth(month);
+                                    setDate(date.getDate());
                                 }}
                                 dateFormat="yyyy년 MM월 dd일 HH시 mm분"
                                 dateFormetCalendar="yyyy년 MM월"
@@ -602,6 +680,7 @@ function Detail(props) {
                                 setScheduleSetting(false);
                                 setStartDateText(startDate);
                                 setEndDateText(endDate);
+                                ModifySchedule();
                             }}
                         >
                             설정하기
@@ -619,10 +698,17 @@ function Detail(props) {
                         <form className="postWriting">
                             <div className="posting-content">
                                 <span>내용</span>
-                                <input type="textarea" />
+                                <input
+                                    type="textarea"
+                                    onChange={(e) => {
+                                        setNotice(e.target.value);
+                                    }}
+                                />
                                 <button
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                        e.preventDefault();
                                         setPostBtn(false);
+                                        ModifyNotice();
                                     }}
                                 >
                                     확인
@@ -631,7 +717,13 @@ function Detail(props) {
                         </form>
                     </div>
                     {isJoin === 0 ? (
-                        <button className="detail-btn" onClick={leaveClass}>
+                        <button
+                            className="detail-btn"
+                            onClick={() => {
+                                leaveClass();
+                                window.location.replace("/");
+                            }}
+                        >
                             모임 나가기
                         </button>
                     ) : null}
@@ -673,8 +765,10 @@ function Detail(props) {
                             }
                             if (isStart === true) {
                                 setStartPlaceInput(address);
+                                console.log(startPlaceInput);
                             } else {
                                 setEndPlaceInput(address);
+                                console.log(endPlaceInput);
                             }
                         }}
                         autoClose

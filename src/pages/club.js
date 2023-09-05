@@ -14,7 +14,7 @@ function Club(props) {
     const API_KEY = process.env.REACT_APP_API_KEY;
     const navigate = useNavigate();
     const token = sessionStorage.getItem("accessToken");
-
+    const [isLogin, setIsLogin] = useState(false);
     const [img, setImg] = useState([]);
     const [clubList, setClubList] = useState([]);
     const [classNo, setClassNo] = useState(0);
@@ -204,7 +204,11 @@ function Club(props) {
                 <div
                     className="club-making"
                     onClick={() => {
-                        setCreateOpen(true);
+                        if (token === null) {
+                            navigate("/login");
+                        } else {
+                            setCreateOpen(true);
+                        }
                     }}
                 >
                     <button>+</button>
@@ -220,9 +224,13 @@ function Club(props) {
                             <div
                                 className="club-item"
                                 onClick={() => {
-                                    setClassNo(clubList[i].class_Id);
-                                    setMaker(clubList[i].maker_id);
-                                    setModalOpen(true);
+                                    if (token === null) {
+                                        navigate("/login");
+                                    } else {
+                                        setClassNo(clubList[i].class_Id);
+                                        setMaker(clubList[i].maker_id);
+                                        setModalOpen(true);
+                                    }
                                     /*
                                     navigate(`/detail/${clubList[i].classParticipantsEntityList[0].participant_id}
                                     `);

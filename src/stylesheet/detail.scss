@@ -292,6 +292,7 @@
         }
         .post-font {
             margin-top: 0.1rem;
+            margin-left: 1.5rem;
             @include fontSetting(#000, "inter", 17px, normal, 500, 150%, -0.264px);
         }
         .important {
