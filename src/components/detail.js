@@ -17,6 +17,7 @@ const { kakao } = window;
 function Detail(props) {
     const navigate = useNavigate();
     const BASE_URL = "http://3.39.75.222:8080";
+
     const [map, setMap] = useState(null);
     const [placeSetting, setPlaceSetting] = useState(false);
     const [scheduleSetting, setScheduleSetting] = useState(false);
@@ -248,7 +249,7 @@ function Detail(props) {
                 .then((result) => {
                     if (result.status === 200) {
                         alert("모임 참여 완료!");
-                        console.log(result);
+                        window.location.replace("/");
                     }
                 })
                 .catch((error) => {
@@ -307,7 +308,7 @@ function Detail(props) {
             .then((result) => {
                 if (result.status === 200) {
                     alert("모임 종료 완료!");
-                    navigate("/community");
+                    window.location.replace("/");
                 }
             })
             .catch((error) => {

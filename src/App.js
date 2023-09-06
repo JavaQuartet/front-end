@@ -24,6 +24,32 @@ function App() {
         name: "",
     });
 
+    const fetchURL = "http://3.39.75.222:8080";
+
+    useEffect(() => {
+        let accessToken = sessionStorage.getItem("accessToken");
+        if (accessToken !== undefined) {
+            axios
+                .get(fetchURL + "/me", {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                })
+                .then((result) => {
+                    console.log(result.data);
+                    setUser({
+                        isLogin: true,
+                        id: result.data.data.id,
+                        email: result.data.data.email,
+                        name: result.data.data.name,
+                    });
+                })
+                .catch((e) => {
+                    alert(e.message);
+                });
+        }
+    }, []);
+
     return (
         <div className="App">
             <Navbar />
@@ -37,7 +63,7 @@ function App() {
                 <Route path="/settings" element={<Settings user={user} setUser={setUser} />} />
                 <Route path="/login" element={<Login setUser={setUser} />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/profilepage/:id" element={<ProfilePage />} />
+                <Route path="/profilepage/:id" element={<ProfilePage user={user} />} />
             </Routes>
         </div>
     );
