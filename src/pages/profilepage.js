@@ -12,7 +12,6 @@ function MyPage({ user, setUser }) {
 
   let navigate = useNavigate();
 
-  let [isMine, setIsMine] = useState(false); //다른사람 페이지면 false, 내페이지면 true
   let [modal, setModal] = useState(false);
 
   let [logModal, setLogModal] = useState(false); //Plogging log 모달
@@ -35,22 +34,6 @@ function MyPage({ user, setUser }) {
 
 
   useEffect(() => {
-
-    //내 마이페이지인지 확인
-    axios.get(fetchURL + "/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    }).then((result) => {
-      if (result.data.data.name === user.name) {
-        setIsMine(true);
-      }
-      else {
-        setIsMine(false);
-      }
-    }).catch((e) => {
-      alert(e.message);
-    })
 
     //유저 프로필 조회
     axios.get(fetchURL + `/users/${user.id}/profile`, {
@@ -180,25 +163,7 @@ function MyPage({ user, setUser }) {
           <p>팔로잉</p>
           <p>N명</p>
         </div>
-
-        {
-          isMine ?
-            <div>
-              <button onClick={() => { setModal(true); }}>프로필 설정</button>
-              <p className="setting" onClick={() => { navigate('/settings'); }}>계정 설정</p>
-              <p className="setting" onClick={() => {
-                setUser({
-                  isLogin: false,
-                  id: '',
-                  name: '',
-                  email: ''
-                })
-                sessionStorage.removeItem('accessToken');
-                navigate('/login')
-              }}>로그 아웃</p>
-            </div>
-            : <button >팔로우하기</button>
-        }
+        <button >팔로우하기</button>
       </div>
 
       <div className="right">
@@ -240,16 +205,3 @@ function OneLog({ setLogModal, title }) {
 
 
 export default MyPage;
-
-/* 
-
-
-
-
-
-
-
-
-
-
-*/

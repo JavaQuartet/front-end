@@ -283,16 +283,3 @@ function OneLog({ setLogModal, title, imgUrl }) {
 
 
 export default MyPage;
-
-/* 
-
-
-
-
-
-
-
-
-
-
-*/
