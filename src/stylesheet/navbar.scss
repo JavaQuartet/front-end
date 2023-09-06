@@ -1,0 +1,57 @@
+@mixin space($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+@mixin btwn($m, $p) {
+    margin: $m;
+    padding: $p;
+}
+
+@mixin fontSetting($size, $style, $w, $h, $space) {
+    font-size: $size;
+    font-style: $style;
+    font-weight: $w;
+    line-height: $h;
+    letter-spacing: $space;
+}
+
+.Navbar {
+    @include space(100%, 70px);
+    padding:10px;
+    display: flex;
+    flex-shrink: 0;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 10;
+    background: #fff;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    .main-list{
+        
+        ul {
+            list-style: none;
+            @include btwn(0, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        li {
+            list-style: none;
+            @include btwn(0.5rem, 0.5rem);
+            @include fontSetting(20px, normal, 400, 150%, -0.264px);
+        }
+    }
+
+    p {
+        margin:0;
+        padding:0 10px;
+        color: #42d084;
+        text-align: center;
+        @include fontSetting(45px, normal, 500, 150%, -0.55px);
+    }
+}
