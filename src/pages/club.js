@@ -9,8 +9,7 @@ import Create from "../components/create.js";
 //스타일시트
 import "../stylesheet/club.scss";
 function Club(props) {
-
-    const URL = "http://3.39.75.222:8080";
+    const BASE_URL = "http://3.39.75.222:8080";
     const API_URL = "https://pixabay.com/api";
     const API_KEY = process.env.REACT_APP_API_KEY;
     const navigate = useNavigate();
@@ -54,7 +53,7 @@ function Club(props) {
     const getList = () => {
         if (search === "") {
             axios
-                .get(URL+"/class/region", {
+                .get(`${BASE_URL}/class/region`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -77,7 +76,7 @@ function Club(props) {
                 });
         } else {
             axios
-                .get(URL+"/class/search", {
+                .get(`${BASE_URL}/class/search`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
