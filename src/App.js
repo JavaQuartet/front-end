@@ -54,7 +54,7 @@ function App() {
             <Navbar />
 
             <Routes>
-                <Route path="/" element={<Community />} />
+                <Route path="/" element={<Main />} />
                 <Route path="/club" element={<Club />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/mypage" element={<MyPage user={user} setUser={setUser} />} />
