@@ -292,11 +292,9 @@ function Detail(props) {
     const endClass = () => {
         axios
             .patch(
-                `${BASE_URL}/class/${props.classNo}`,
+                `${BASE_URL}/class/ended/${props.classNo}`,
                 {
-                    data: {
-                        classId: props.classNo,
-                    },
+                    classId: props.classNo,
                 },
                 {
                     headers: {
@@ -308,6 +306,7 @@ function Detail(props) {
             .then((result) => {
                 if (result.status === 200) {
                     alert("모임 종료 완료!");
+                    console.log(result);
                     window.location.replace("/");
                 }
             })

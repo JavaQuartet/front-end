@@ -147,6 +147,8 @@
             .club-content {
                 @include club-list(9rem);
                 margin-right: 0.5rem;
+                margin-top: 1rem;
+                height: 20px;
                 font-size: 14px;
                 text-align: center;
             }
@@ -155,13 +157,14 @@
                 @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.175px);
                 position: relative;
                 margin-top: 3.5rem;
+                padding-top: 0rem;
                 .people-icon {
                     position: absolute;
                     width: 1.2rem;
                     height: 1.2rem;
                     margin-top: 0.2rem;
                     top: 180%;
-                    left: 47%;
+                    left: 46%;
                 }
 
                 span {
@@ -171,7 +174,7 @@
                 .people-text {
                     position: absolute;
                     top: 180%;
-                    left: 54%;
+                    left: 52%;
                 }
 
                 .place {
