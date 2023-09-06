@@ -33,6 +33,7 @@ function Detail(props) {
 
     //모임 만든 사람
     const [makerName, setMakerName] = useState("");
+    const [makerImage, setMakerImage] = useState("");
     //참여중인 사용자
     const [participant, setParticipant] = useState([]);
 
@@ -95,6 +96,8 @@ function Detail(props) {
             .then((result) => {
                 if (result.status === 200) {
                     setMakerName(result.data.data.nickname);
+                    setMakerImage(result.data.data.profile_url);
+                    console.log(result);
                 }
             })
             .catch((error) => {
@@ -401,6 +404,7 @@ function Detail(props) {
                 },
             })
             .then((result) => {
+                console.log(result);
                 //참여한 모임
                 console.log(result);
                 if (result.status === 200) {
@@ -477,8 +481,7 @@ function Detail(props) {
                     <div className="detail-title">{title}</div>
                     <div className="profile">
                         <span>
-                            {/*<img className="profile-icon" src={require("../img/profile.jpg")} />*/}
-                            Maker:
+                            <img className="profile-icon" src={makerImage} />
                         </span>
                         <span>{makerName}</span>
                         <span>
@@ -557,12 +560,16 @@ function Detail(props) {
                             <div className="detail-board">
                                 {participant.map((res, i) => {
                                     return (
-                                        <div className="detail-post action">
-                                            {/*
-                                                <div className="img-frame">
-                                                <img src={require("../img/profile.jpg")} />
-                                                </div>
-                                            */}
+                                        <div
+                                            className="detail-post action"
+                                            onClick={() => {
+                                                navigate(`/profilepage/${participant[i].userid}`);
+                                            }}
+                                        >
+                                            <div className="img-frame">
+                                                <img src={participant[i].profile_image} />
+                                            </div>
+
                                             <p className="post-font">
                                                 {participant[i].user_nickname}
                                             </p>
