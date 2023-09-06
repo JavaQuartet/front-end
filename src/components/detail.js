@@ -17,6 +17,7 @@ const { kakao } = window;
 function Detail(props) {
     const navigate = useNavigate();
     const BASE_URL = "http://3.39.75.222:8080";
+  
     const [map, setMap] = useState(null);
     const [placeSetting, setPlaceSetting] = useState(false);
     const [scheduleSetting, setScheduleSetting] = useState(false);
