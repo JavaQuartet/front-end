@@ -179,7 +179,7 @@
             height: 30%;
           }
           .act {
-            margin-left: 30px;
+            margin-left: 10%;
   
             width: 227px;
             height: 246px;
@@ -187,7 +187,7 @@
           }
           .club-title {
             position: absolute;
-            width: 220px;
+            width: 80%;
             height: 34px;
             font-family: "Inter";
             font-style: normal;
@@ -196,12 +196,12 @@
             line-height: 34px;
             color: #000000;
             margin: 35px;
-            margin-top: 30px;
+            margin-top: 80px;
           }
   
           .club-content {
             position: absolute;
-            width: 300px;
+            width: 30%;
             height: 29px;
             font-family: "Inter";
             font-style: normal;
@@ -209,14 +209,14 @@
             font-size: 24px;
             line-height: 29px;
             color: #000000;
-            margin-left: 300px;
+            margin-left: 60%;
             margin-top: 160px;
           }
           .footer {
             box-sizing: border-box;
             position: relative;
           width: 100%;
-            height: 115px;
+            height: 103px;
             background: #f7f7f7;
             border-width: 0px 1px 1px 1px;
             border-top: 1px solid #42d084;
@@ -292,3 +292,43 @@
   .comment-button:hover {
     background-color: #42d084; /* 마우스 호버 시 배경색 변경 */
   }
+
+  .heart {
+    width: 15px;
+    height: 15px;
+    background: #ccc;
+    position: relative;
+    transform: rotate(45deg);
+    left: 90%;
+    border: #ea2027;
+  }
+  
+  .heart::before,
+  .heart::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    border-radius: 50%;
+    background: #ccc;
+  }
+  
+  .heart::before {
+    left: -50%;
+  }
+  
+  .heart::after {
+    top: -50%;
+  }
+  
+  .heart:hover, 
+  .heart:hover::before,
+.heart:hover::after  {
+    background: #ea2027; 
+  }
+  
+  .heart-clicked,
+.heart-clicked::before,
+.heart-clicked::after {
+  background: #ea2027;
+}
