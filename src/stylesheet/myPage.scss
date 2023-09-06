@@ -38,6 +38,7 @@ $green: #1a780b;
         flex-wrap: nowrap;
         overflow-y: scroll;
         border-radius: 10px;
+        align-items: center;
 
         // ::after{
         //     content:"";
@@ -248,6 +249,7 @@ $green: #1a780b;
                 overflow-x: scroll;
                 padding: 15px;
                 gap:15px;
+                height: 212px;
 
                 img {
                     border-radius: 5px;
