@@ -28,22 +28,14 @@ function MyPage({ user, setUser }) {
 
   let accessToken = sessionStorage.getItem('accessToken');
 
-  let [classNum, setClassNum]=useState(0);
+  let [classNum, setClassNum] = useState(0);
 
 
   useEffect(() => {
-    //내 마이페이지인지 확인
-    axios.get(fetchURL + "/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    }).then((result) => {
-      if (result.data.data.name === user.name) {
-        navigate('/mypage');
-      }
-    }).catch((e) => {
-      alert(e.message);
-    })
+
+    if(Number(id) === Number(user.id)){
+      navigate('/mypage');
+    }
 
     //유저 프로필 조회
     axios.get(fetchURL + `/users/${id}/profile`, {
