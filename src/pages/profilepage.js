@@ -32,6 +32,18 @@ function MyPage({ user, setUser }) {
 
 
   useEffect(() => {
+    //내 마이페이지인지 확인
+    axios.get(fetchURL + "/me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).then((result) => {
+      if (result.data.data.name === user.name) {
+        navigate('/mypage');
+      }
+    }).catch((e) => {
+      alert(e.message);
+    })
 
     //유저 프로필 조회
     axios.get(fetchURL + `/users/${id}/profile`, {
