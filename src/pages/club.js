@@ -27,7 +27,7 @@ function Club(props) {
 
     const [dDay, setDDay] = useState([]);
 
-    const [maker, setMaker] = useState(0);
+    const [maker, setMaker] = useState("");
     useEffect(() => {
         getList();
     }, [search]);

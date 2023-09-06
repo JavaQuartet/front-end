@@ -226,33 +226,37 @@ function Detail(props) {
     };
     //모임 참여
     const joinClass = () => {
-        axios
-            .post(
-                `http://43.200.172.177:8080/class/join/${props.classNo}`,
-                {
-                    classId: props.classNo,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${props.token}`,
-                        "Content-Type": "application/json",
+        if (currentMember === maxMember) {
+            alert("모임이 가득 차 참여할 수 없습니다!");
+        } else {
+            axios
+                .post(
+                    `http://43.200.172.177:8080/class/join/${props.classNo}`,
+                    {
+                        classId: props.classNo,
                     },
-                }
-            )
-            .then((result) => {
-                if (result.status === 200) {
-                    alert("모임 참여 완료!");
-                    navigate("/mypage");
-                    console.log(result);
-                }
-            })
-            .catch((error) => {
-                if (error.status === 401) {
-                    navigate("/login");
-                } else if (error.status === 400) {
-                    alert("이미 참여한 모임입니다.");
-                }
-            });
+                    {
+                        headers: {
+                            Authorization: `Bearer ${props.token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                )
+                .then((result) => {
+                    if (result.status === 200) {
+                        alert("모임 참여 완료!");
+                        navigate("/mypage");
+                        console.log(result);
+                    }
+                })
+                .catch((error) => {
+                    if (error.status === 401) {
+                        navigate("/login");
+                    } else if (error.status === 400) {
+                        alert("이미 참여한 모임입니다.");
+                    }
+                });
+        }
     };
 
     //모임 나가기
