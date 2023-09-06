@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import Detail from '../components/detail.js'
 import axios from "axios";
@@ -8,6 +8,8 @@ import "../stylesheet/profilepage.scss"
 function MyPage({ user, setUser }) {
 
   let navigate = useNavigate();
+
+  let {id} = useParams();
 
   let [logModal, setLogModal] = useState(false); //Plogging log 모달
   let [msgModal, setMsgModal] = useState(false); //쪽지 쓰는 모달 창
@@ -32,7 +34,7 @@ function MyPage({ user, setUser }) {
   useEffect(() => {
 
     //유저 프로필 조회
-    axios.get(fetchURL + `/users/${user.id}/profile`, {
+    axios.get(fetchURL + `/users/${id}/profile`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -43,12 +45,13 @@ function MyPage({ user, setUser }) {
       newUserInfo.profileUrl = tmp.profile_url;
       newUserInfo.introduction = tmp.introduction;
       setUserInfo(newUserInfo);
+      console.log(newUserInfo);
     }).catch((e) => {
       alert(e.message);
     })
 
     //모임 횟수 조회
-    axios.get(fetchURL + `/users/${user.id}/class-count`, {
+    axios.get(fetchURL + `/users/${id}/class-count`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -60,7 +63,7 @@ function MyPage({ user, setUser }) {
     });
 
     //모임 거리 조회
-    axios.get(fetchURL + `/users/${user.id}/class-distance`, {
+    axios.get(fetchURL + `/users/${id}/class-distance`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -72,7 +75,7 @@ function MyPage({ user, setUser }) {
     })
 
     //유저 모임 조회
-    axios.get(fetchURL + `/users/${user.id}/classes?category=0`, {
+    axios.get(fetchURL + `/users/${id}/classes?category=0`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
@@ -97,15 +100,17 @@ function MyPage({ user, setUser }) {
 
   }, []);
 
+  let [maker, setMaker] = useState(0);
+
   return (
     <div className="profilepage">
       {
-        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} token={accessToken} classNo={classNum}/> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} token={accessToken} classNo={classNum} maker={maker}/> : null
       }
 
       <div className="left">
         <img className="profile-image" alt='프로필 사진' src={userInfo.profileUrl}></img>
-        <h2>{user.name}</h2>
+        <h2>{userInfo.nickname}</h2>
         <div className="intro-msg">{userInfo.introduction}</div>
         {/* <div className="follow-info">
           <p>팔로워</p>
@@ -118,7 +123,7 @@ function MyPage({ user, setUser }) {
           setMsgModal(true);
         }} >쪽지보내기</button>
         {
-          msgModal && <MsgModal setMsgModal={setMsgModal}/>
+          msgModal && <MsgModal accessToken={accessToken} userId={id} fetchURL={fetchURL} setMsgModal={setMsgModal}/>
         }
       </div>
 
@@ -135,7 +140,7 @@ function MyPage({ user, setUser }) {
             {
               logs.length > 0 ?
                 logs.map((e, i) => {
-                  return <OneLog setClassNum={setClassNum} classId={e.class_Id} title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl}/>;
+                  return <OneLog setClassNum={setClassNum} setMaker={setMaker} maker={e.maker_id} classId={e.class_Id} title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl}/>;
                 })
                 : <p>아직 참여한 모임이 없습니다!</p>
             }
@@ -146,9 +151,10 @@ function MyPage({ user, setUser }) {
   );
 }
 
-function OneLog({ setLogModal, title, imgUrl, classId, setClassNum }) {
+function OneLog({ setLogModal, title, imgUrl, classId, setClassNum, setMaker, maker }) {
   return (
     <div onClick={() => {
+      setMaker(maker);
       setClassNum(classId);
       setLogModal(true);
     }} className="one-log">
@@ -159,15 +165,28 @@ function OneLog({ setLogModal, title, imgUrl, classId, setClassNum }) {
 
 }
 
-function MsgModal({ setMsgModal }) {
+function MsgModal({ setMsgModal, fetchURL, userId, accessToken }) {
   return (
     <div className="modal">
     <div className="msg-modal">
       <textarea id="content" placeholder="상대방에게 보낼 메시지를 작성하세요!" />
       <div className="buttons">
         <button onClick={()=>{ 
-          // axios.post()
-          //여기 쪽지 보내기 기능 완성하면 거ㅡ이 끝 진자 긑
+          let newData = {
+              content: document.getElementById('content').value,
+              receiverId: userId
+            }
+          axios.post(fetchURL + '/messages', newData, {
+            headers: {
+            Authorization: `Bearer ${accessToken}`
+          }}).then((result)=>{
+            alert('쪽지 보내기 성공!');
+          }).catch((e)=>{
+            alert(e.message);
+          })
+          setMsgModal(false);
+
+          
          }}>전송</button>
         <button style={{"backgroundColor":"rgb(95,99,104)"}} onClick={() => { setMsgModal(false); }}>취소</button>
       </div>
