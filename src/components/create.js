@@ -11,7 +11,7 @@ import ko from "date-fns/locale/ko";
 registerLocale("ko", ko);
 const { kakao } = window;
 function Create(props) {
-    const URL = "http://3.39.75.222:8080";
+    const BASE_URL = "http://3.39.75.222:8080";
 
     const [postModalOpen, setPostModalOpen] = useState(false);
 
@@ -80,7 +80,7 @@ function Create(props) {
         console.log("title: " + title + " startRegion: " + startPlace + "endRegion: " + endPlace);
         axios
             .post(
-                `${URL}/class`,
+                `${BASE_URL}/class`,
                 {
                     title: title,
                     member_max: member,

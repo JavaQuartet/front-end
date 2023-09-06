@@ -16,6 +16,7 @@ const { kakao } = window;
 
 function Detail(props) {
     const navigate = useNavigate();
+    const BASE_URL = "http://3.39.75.222:8080";
 
 
     const fetchURL = "http://3.39.75.222:8080";
@@ -88,7 +89,7 @@ function Detail(props) {
     //모임 만든사람 정보
     const getMaker = () => {
         axios
-            .get(fetchURL + `/users/${props.maker}/profile`, {
+            .get(`${BASE_URL}/users/${props.maker}/profile`, {
                 headers: {
                     Authorization: `Bearer ${props.token}`,
                 },
@@ -150,7 +151,7 @@ function Detail(props) {
         setDistanceText(distance.toString());
         axios
             .patch(
-                fetchURL+`/class/${props.classNo}`,
+                `${BASE_URL}/class/${props.classNo}`,
                 {
                     classId: props.classNo,
                     startRegion: startPlaceInput,
@@ -178,7 +179,7 @@ function Detail(props) {
     const ModifySchedule = () => {
         axios
             .patch(
-                fetchURL+ `/class/${props.classNo}`,
+                `${BASE_URL}/class/${props.classNo}`,
                 {
                     classId: props.classNo,
                     start_date: startDate,
@@ -209,7 +210,7 @@ function Detail(props) {
         console.log(notice);
         axios
             .patch(
-                fetchURL+ `/class/notice/${props.classNo}`,
+                `${BASE_URL}/class/notice/${props.classNo}`,
                 {
                     classId: props.classNo,
                     notice: notice,
@@ -237,7 +238,7 @@ function Detail(props) {
         } else {
             axios
                 .post(
-                    fetchURL+`/class/join/${props.classNo}`,
+                    `${BASE_URL}/class/join/${props.classNo}`,
                     {
                         classId: props.classNo,
                     },
@@ -251,8 +252,7 @@ function Detail(props) {
                 .then((result) => {
                     if (result.status === 200) {
                         alert("모임 참여 완료!");
-                        navigate("/mypage");
-                        console.log(result);
+                        window.location.replace("/");
                     }
                 })
                 .catch((error) => {
@@ -269,7 +269,7 @@ function Detail(props) {
     const leaveClass = () => {
         axios
             .post(
-                fetchURL+`/class/unjoin/${props.classNo}`,
+                `${BASE_URL}/class/unjoin/${props.classNo}`,
                 {
                     classId: props.classNo,
                 },
@@ -295,7 +295,7 @@ function Detail(props) {
     const endClass = () => {
         axios
             .patch(
-                fetchURL+`/class/${props.classNo}`,
+                `${BASE_URL}/class/${props.classNo}`,
                 {
                     data: {
                         classId: props.classNo,
@@ -311,7 +311,7 @@ function Detail(props) {
             .then((result) => {
                 if (result.status === 200) {
                     alert("모임 종료 완료!");
-                    navigate("/community");
+                    window.location.replace("/");
                 }
             })
             .catch((error) => {
@@ -323,20 +323,14 @@ function Detail(props) {
 
     //모임 삭제
     const deleteClass = () => {
+        console.log(props.token);
         axios
-            .delete(
-                fetchURL+`/class/${props.classNo}`,
-                {
-                    data: {
-                        classId: props.classNo,
-                    },
+            .delete(`${BASE_URL}/class/${props.classNo}`, {
+                headers: {
+                    Authorization: `Bearer ${props.token}`,
+                    "Content-Type": "application/json",
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${props.token}`,
-                    },
-                }
-            )
+            })
             .then((result) => {
                 if (result.status === 200) {
                     alert("모임 삭제 완료!");
@@ -401,7 +395,7 @@ function Detail(props) {
     //상세 페이지 정보 요청
     const getClass = async () => {
         const detail = await axios
-            .get(fetchURL+`/class/${props.classNo}`, {
+            .get(`${BASE_URL}/class/${props.classNo}`, {
                 headers: {
                     Authorization: `Bearer ${props.token}`,
                 },
