@@ -65,7 +65,6 @@ function Detail(props) {
     const [endCoords, setEndCoords] = useState({ y: 0, x: 0 });
 
     //거리
-    //let [distance, setDistance] = useState(0);
     //modal 핸들러
     const [postModalOpen, setPostModalOpen] = useState(false);
     let distance = 0;
@@ -108,8 +107,8 @@ function Detail(props) {
         function deg2rad(deg) {
             return deg * (Math.PI / 180);
         }
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2 - lat1); // deg2rad below
+        var R = 6371;
+        var dLat = deg2rad(lat2 - lat1);
         var dLon = deg2rad(lng2 - lng1);
         var a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -118,9 +117,8 @@ function Detail(props) {
                 Math.sin(dLon / 2) *
                 Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = Math.round(R * c * 100) / 100; // Distance in km
+        var d = Math.round(R * c * 100) / 100;
 
-        //setDistance(d);
         distance = d;
         return d;
     };
