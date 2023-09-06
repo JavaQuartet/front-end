@@ -19,8 +19,10 @@ function MyPage({ user, setUser }) {
 
   let [msgModal, setMsgModal] = useState(false);
 
-  let fetchURL = 'http://43.200.172.177:8080';
+  let [classNum, setClassNum] = useState(0);
 
+
+  const fetchURL = "http://3.39.75.222:8080";
   let [userInfo, setUserInfo] = useState({
     nickname: '',
     profileUrl: '',
@@ -36,6 +38,13 @@ function MyPage({ user, setUser }) {
 
   useEffect(() => {
 
+    accessToken = sessionStorage.getItem('accessToken');
+
+    if(!user.isLogin){
+      alert('로그인 후 이용 바랍니다.');
+      navigate('/login')
+    }
+    else{
     //내 마이페이지인지 확인
     axios.get(fetchURL + "/me", {
       headers: {
@@ -115,7 +124,7 @@ function MyPage({ user, setUser }) {
     }).catch((e) => {
       alert(e.message);
     })
-
+  }
   }, []);
 
 
@@ -164,8 +173,17 @@ function MyPage({ user, setUser }) {
           </div>
           : null
       }
+
+{/* <Detail
+                        setModalOpen={setModalOpen}
+                        classNo={classNo}
+                        token={token}
+                        maker={maker}
+
+                        maker={} classNo={}
+                    /> */}
       {
-        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} token={accessToken} classNo={classNum}/> : null
       }
       {
         modal ?
@@ -257,7 +275,7 @@ function MyPage({ user, setUser }) {
             {
               logs.length > 0 ?
                 logs.map((e, i) => {
-                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl} />;
+                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl} setClassNum={setClassNum} classId={e.class_Id}/>;
                 })
                 : <p>모임에 참여해주세요!</p>
             }
@@ -268,10 +286,11 @@ function MyPage({ user, setUser }) {
   );
 }
 
-function OneLog({ setLogModal, title, imgUrl }) {
+function OneLog({ setLogModal, title, imgUrl, setClassNum, classId}) {
 
   return (
     <div onClick={() => {
+      setClassNum(classId);
       setLogModal(true);
     }} className="one-log">
       <img alt="플로깅 사진" src={imgUrl} />

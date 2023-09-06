@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Settings({ user, setUser }) {
-    const fetchURL = 'http://43.200.172.177:8080';
+    const fetchURL = "http://3.39.75.222:8080";
 
     const [openPostcode, setOpenPostcode] = useState(false);
     let [region, setRegion] = useState({ address: '주소' });

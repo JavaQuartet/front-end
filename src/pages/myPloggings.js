@@ -13,7 +13,9 @@ function MyPloggings() {
 
     let accessToken = sessionStorage.getItem('accessToken');
 
-    const fetchURL = 'http://43.200.172.177:8080';
+    const fetchURL = "http://3.39.75.222:8080";
+
+    let [classNum, setClassNum] = useState(0);
     
 
     useEffect(() => {
@@ -73,7 +75,7 @@ function MyPloggings() {
         <div className="my-ploggings">
 
             {
-                logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} token={accessToken} classNo={classNum}/> : null
             }
             <h1 onClick={() => { setType(0) }}>Plogging Logs</h1>
             <div className="types">
@@ -84,7 +86,7 @@ function MyPloggings() {
             <div className="items-container">
                 {
                     logs.map((e, i) => {
-                        return <OneItem element={e} key={i} setLogModal={setLogModal}/>
+                        return <OneItem element={e} key={i} setLogModal={setLogModal} setClassNum={setClassNum}/>
                     })
                 }
             </div>
@@ -92,10 +94,10 @@ function MyPloggings() {
     )
 }
 
-function OneItem({ setLogModal, element }) {
+function OneItem({ setLogModal, element, setClassNum }) {
 
     return (
-        <div onClick={() => { setLogModal(true); }} className="item">
+        <div onClick={() => { setClassNum(element.class_Id); setLogModal(true); }} className="item">
             <img width="100px" height="100px" src={element.imgUrl} alt="플로깅 사진" />
             <p>{element.title}</p>
         </div>

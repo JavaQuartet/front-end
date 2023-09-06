@@ -11,7 +11,7 @@ import ko from "date-fns/locale/ko";
 registerLocale("ko", ko);
 const { kakao } = window;
 function Create(props) {
-    const URL = "http://43.200.172.177:8080";
+    const URL = "http://3.39.75.222:8080";
 
     const [postModalOpen, setPostModalOpen] = useState(false);
 

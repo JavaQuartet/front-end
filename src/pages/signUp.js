@@ -36,7 +36,7 @@ function SignUp() {
         },
     };
 
-    const fetchURL = "http://43.200.172.177:8080";
+    const fetchURL = "http://3.39.75.222:8080";
 
     return (
         <div className="signup-background">
@@ -95,26 +95,32 @@ function SignUp() {
                 />
                 <button
                     onClick={() => {
-                        if (pw !== pw2) {
-                            alert("비밀번호를 확인 해주세요!");
-                        } else {
-                            let newUser = {
-                                name: name,
-                                birth: startDate.toDateString(),
-                                password: pw,
-                                email: email,
-                                region: region,
-                            };
-                            console.log(region);
-                            axios
-                                .post(fetchURL + "/auth/sign-up", newUser)
-                                .then((result) => {
-                                    alert("회원가입 되었습니다. 새롭게 로그인해주세요!");
-                                    navigate("/login");
-                                })
-                                .catch((e) => {
-                                    alert(e.message);
-                                });
+                        let regex = new RegExp('^[a-zA-Z0-9]{6,15}$')
+                        if (!regex.test(pw)) {
+                            alert('영어와 숫자로 조합된 6~15자 사이의 비밀번호를 입력해주세요!')
+                        }
+                        else {
+                            if (pw !== pw2) {
+                                alert("비밀번호를 확인 해주세요!");
+                            } else {
+                                let newUser = {
+                                    name: name,
+                                    birth: startDate.toDateString(),
+                                    password: pw,
+                                    email: email,
+                                    region: region,
+                                };
+                                console.log(region);
+                                axios
+                                    .post(fetchURL + "/auth/sign-up", newUser)
+                                    .then((result) => {
+                                        alert("회원가입 되었습니다. 새롭게 로그인해주세요!");
+                                        navigate("/login");
+                                    })
+                                    .catch((e) => {
+                                        alert(e.message);
+                                    });
+                            }
                         }
                     }}
                     className="login"

@@ -29,11 +29,13 @@ function Community() {
   let [modal, setModal] = useState(false);
 
   let [msgModal, setMsgModal] = useState(false);
+  const fetchURL = "http://3.39.75.222:8080";
+
 
   // 커뮤니티 게시글 조회
   useEffect(() => {
     axios
-      .get("http://43.200.172.177:8080/board")
+      .get(fetchURL+"/board")
       .then((result) => {
         if (result.status === 200) {
           console.log(result.data.data);
@@ -44,7 +46,7 @@ function Community() {
           //커뮤니티 게시글 댓글 서버에서 GET
           result.data.data.forEach((post) => {
             axios
-              .get(`http://43.200.172.177:8080/board/${post.postId}/comments`)
+              .get(fetchURL+`/board/${post.postId}/comments`)
               .then((response) => {
                 if (response.status === 200) {
                   const commentsForPost = response.data.data;

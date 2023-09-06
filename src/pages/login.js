@@ -9,7 +9,7 @@ function Login({ setUser }) {
     let [email, setEmail] = useState('');
     let [pw, setPw] = useState('');
 
-    let fetchURL = 'http://43.200.172.177:8080';
+    const fetchURL = "http://3.39.75.222:8080";
 
     let navigate = useNavigate();
 

@@ -17,6 +17,9 @@ const { kakao } = window;
 function Detail(props) {
     const navigate = useNavigate();
 
+
+    const fetchURL = "http://3.39.75.222:8080";
+
     const [map, setMap] = useState(null);
     const [placeSetting, setPlaceSetting] = useState(false);
     const [scheduleSetting, setScheduleSetting] = useState(false);
@@ -85,7 +88,7 @@ function Detail(props) {
     //모임 만든사람 정보
     const getMaker = () => {
         axios
-            .get(`http://43.200.172.177:8080/users/${props.maker}/profile`, {
+            .get(fetchURL + `/users/${props.maker}/profile`, {
                 headers: {
                     Authorization: `Bearer ${props.token}`,
                 },
@@ -147,7 +150,7 @@ function Detail(props) {
         setDistanceText(distance.toString());
         axios
             .patch(
-                `http://43.200.172.177:8080/class/${props.classNo}`,
+                fetchURL+`/class/${props.classNo}`,
                 {
                     classId: props.classNo,
                     startRegion: startPlaceInput,
@@ -175,7 +178,7 @@ function Detail(props) {
     const ModifySchedule = () => {
         axios
             .patch(
-                `http://43.200.172.177:8080/class/${props.classNo}`,
+                fetchURL+ `/class/${props.classNo}`,
                 {
                     classId: props.classNo,
                     start_date: startDate,
@@ -206,7 +209,7 @@ function Detail(props) {
         console.log(notice);
         axios
             .patch(
-                `http://43.200.172.177:8080/class/notice/${props.classNo}`,
+                fetchURL+ `/class/notice/${props.classNo}`,
                 {
                     classId: props.classNo,
                     notice: notice,
@@ -234,7 +237,7 @@ function Detail(props) {
         } else {
             axios
                 .post(
-                    `http://43.200.172.177:8080/class/join/${props.classNo}`,
+                    fetchURL+`/class/join/${props.classNo}`,
                     {
                         classId: props.classNo,
                     },
@@ -266,7 +269,7 @@ function Detail(props) {
     const leaveClass = () => {
         axios
             .post(
-                `http://43.200.172.177:8080/class/unjoin/${props.classNo}`,
+                fetchURL+`/class/unjoin/${props.classNo}`,
                 {
                     classId: props.classNo,
                 },
@@ -292,7 +295,7 @@ function Detail(props) {
     const endClass = () => {
         axios
             .patch(
-                `http://43.200.172.177:8080/class/${props.classNo}`,
+                fetchURL+`/class/${props.classNo}`,
                 {
                     data: {
                         classId: props.classNo,
@@ -322,7 +325,7 @@ function Detail(props) {
     const deleteClass = () => {
         axios
             .delete(
-                `http://43.200.172.177:8080/class/${props.classNo}`,
+                fetchURL+`/class/${props.classNo}`,
                 {
                     data: {
                         classId: props.classNo,
@@ -398,7 +401,7 @@ function Detail(props) {
     //상세 페이지 정보 요청
     const getClass = async () => {
         const detail = await axios
-            .get(`http://43.200.172.177:8080/class/${props.classNo}`, {
+            .get(fetchURL+`/class/${props.classNo}`, {
                 headers: {
                     Authorization: `Bearer ${props.token}`,
                 },
