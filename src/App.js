@@ -26,36 +26,33 @@ function App() {
 
     const fetchURL = "http://3.39.75.222:8080";
 
-    useEffect(() => {
-        let accessToken = sessionStorage.getItem("accessToken");
-        if (accessToken !== undefined) {
-            axios
-                .get(fetchURL + "/me", {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                })
-                .then((result) => {
-                    console.log(result.data);
-                    setUser({
-                        isLogin: true,
-                        id: result.data.data.id,
-                        email: result.data.data.email,
-                        name: result.data.data.name,
-                    });
-                })
-                .catch((e) => {
-                    alert(e.message);
+    useEffect(()=>{
+        let accessToken = sessionStorage.getItem('accessToken');
+        if(accessToken !== undefined){
+            axios.get(fetchURL + "/me", {
+                headers: {
+                  Authorization: `Bearer ${accessToken}`
+                }
+              }).then((result) => {
+                console.log(result.data);
+                setUser({
+                    isLogin:true,
+                    id: result.data.data.id,
+                    email: result.data.data.email,
+                    name: result.data.data.name
                 });
+              }).catch((e) => {
+                alert(e.message);
+              })
         }
-    }, []);
+    },[])
 
     return (
         <div className="App">
             <Navbar />
 
             <Routes>
-                <Route path="/" element={<Community />} />
+                <Route path="/" element={<Main />} />
                 <Route path="/club" element={<Club />} />
                 <Route path="/community" element={<Community />} />
                 <Route path="/mypage" element={<MyPage user={user} setUser={setUser} />} />
