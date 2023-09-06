@@ -25,7 +25,7 @@ function Settings({ user, setUser }) {
                 depth_1: data.sido,
                 depth_2: data.sigungu,
                 depth_3: data.bname,
-                address: data.address
+                address: data.jibunAddress
             })
             setOpenPostcode(false);
         }

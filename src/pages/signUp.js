@@ -33,7 +33,7 @@ function SignUp() {
                 depth_1: data.sido,
                 depth_2: data.sigungu,
                 depth_3: data.bname,
-                address: data.address
+                address: data.jibunAddress
             })
             setOpenPostcode(false);
         }
@@ -71,7 +71,7 @@ function SignUp() {
                     setPw(e.target.value);
                 }} type="password" placeholder="패스워드" id="password" />
                 <input onChange={(e)=>{
-                    setPw2(e.target.valie);
+                    setPw2(e.target.value);
                 }} type="password" placeholder="패스워드 확인" id="password" />
                 <button onClick={() => {
                     if(pw !== pw2){
@@ -85,6 +85,7 @@ function SignUp() {
                             email: email,
                             region: region
                         }
+                        console.log(region);
                         axios.post(fetchURL + '/auth/sign-up', newUser)
                         .then((result)=>{
                             alert('회원가입 되었습니다. 새롭게 로그인해주세요!')
