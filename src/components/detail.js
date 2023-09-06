@@ -85,7 +85,7 @@ function Detail(props) {
     //모임 만든사람 정보
     const getMaker = () => {
         axios
-            .get(`${BASE_URL}/${props.maker}/profile`, {
+            .get(`${BASE_URL}/users/${props.maker}/profile`, {
                 headers: {
                     Authorization: `Bearer ${props.token}`,
                 },
@@ -248,7 +248,6 @@ function Detail(props) {
                 .then((result) => {
                     if (result.status === 200) {
                         alert("모임 참여 완료!");
-                        navigate("/mypage");
                         console.log(result);
                     }
                 })
@@ -320,20 +319,14 @@ function Detail(props) {
 
     //모임 삭제
     const deleteClass = () => {
+        console.log(props.token);
         axios
-            .delete(
-                `${BASE_URL}/class/${props.classNo}`,
-                {
-                    data: {
-                        classId: props.classNo,
-                    },
+            .delete(`${BASE_URL}/class/${props.classNo}`, {
+                headers: {
+                    Authorization: `Bearer ${props.token}`,
+                    "Content-Type": "application/json",
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${props.token}`,
-                    },
-                }
-            )
+            })
             .then((result) => {
                 if (result.status === 200) {
                     alert("모임 삭제 완료!");

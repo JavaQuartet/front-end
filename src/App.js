@@ -17,12 +17,11 @@ import SignUp from "./pages/signUp.js";
 import "./stylesheet/App.scss";
 
 function App() {
-
     let [user, setUser] = useState({
-        isLogin:false,
-        id: '',
-        email: '',
-        name: ''
+        isLogin: false,
+        id: "",
+        email: "",
+        name: "",
     });
 
     return (
@@ -35,9 +34,10 @@ function App() {
                 <Route path="/community" element={<Community />} />
                 <Route path="/mypage" element={<MyPage user={user} setUser={setUser} />} />
                 <Route path="/myploggings" element={<MyPloggings />} />
-                <Route path="/settings" element={<Settings user={user} setUser={setUser}/>} />
-                <Route path="/login" element={<Login setUser={setUser}/>} />
+                <Route path="/settings" element={<Settings user={user} setUser={setUser} />} />
+                <Route path="/login" element={<Login setUser={setUser} />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/profilepage/:id" element={<ProfilePage />} />
             </Routes>
         </div>
     );
