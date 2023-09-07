@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Post from "../components/post.js";
 
@@ -15,51 +14,10 @@ export default function Sidebar() {
           setPostOpen(true);
         }}
       >
-        <img src={require("../img/posting.png")} alt="post" className="post" />
-        <p style={{ fontSize: "11px", marginLeft: "8px" }}>게시글 작성</p>
+      <button className="side-button"> +</button> 
+        <p >게시글 작성</p>
       </div>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
-      <Link to="/">
-        <img
-          src={require("../img/profile.jpg")}
-          alt="profile"
-          className="photo"
-        />
-      </Link>
+   
       {postOpen === true ? <Post setPostOpen={setPostOpen} /> : null}
     </div>
   );

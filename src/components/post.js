@@ -10,35 +10,34 @@ function Post(props) {
   const [category, setCategory] = useState(1);
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [imgPath, setImgPath] = useState(""); // State to store the image path
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const handleCustomFileInputClick = () => {
+    document.getElementById("file-input").click();
+  };
   const handleImageUpload = (e) => {
     const selectedImage = e.target.files[0];
 
     if (selectedImage) {
       setSelectedImage(selectedImage);
       console.log(selectedImage);
-
-      // Extract the path from the selected image and set it in the imgPath state
-      const imagePath = URL.createObjectURL(selectedImage);
-      setImgPath(imagePath);
-      console.log(imagePath)
     }
+    
   };
 
-  const handlePostSubmit = () => {
+  const handlePostSubmit = (e) => {
     const postData = {
       title: title,
       contents: contents,
       category: category,
-      imgPath: imgPath,
+      file: selectedImage,
     };
-  
+
     axios
       .post("http://3.39.75.222:8080/board/posting", postData, {
         headers: {
           Authorization: `Bearer ${t}`,
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
@@ -52,15 +51,16 @@ function Post(props) {
       })
       .catch((error) => {
         console.error("게시글 등록 중 에러 발생:", error);
-  
+        alert('사진 추가 후 다시 작성해 주세요!')
         if (error.response) {
           console.error("Server Error Message:", error.response.data);
         }
-  
+
+
         props.setPostOpen(false);
       });
   };
-  
+
   return (
     <div
       className="create-outside"
@@ -80,13 +80,13 @@ function Post(props) {
             onClick={() => setArtistSelectOpen(!isArtistSelectOpen)}
           >
             카테고리 선택
-            </button>
+          </button>
           <ul className={`list-member ${isArtistSelectOpen ? "on" : ""}`}>
             <li>
-            <button
+              <button
                 type="button"
                 className="name"
-                onClick={() => setCategory(1)} // 자유 카테고리 선택
+                onClick={() => {setCategory(1)}} 
               >
                 자유
               </button>
@@ -95,7 +95,7 @@ function Post(props) {
               <button
                 type="button"
                 className="name"
-                onClick={() => setCategory(2)} // 후기 카테고리 선택
+                onClick={() => setCategory(2)} 
               >
                 후기
               </button>
@@ -104,7 +104,7 @@ function Post(props) {
               <button
                 type="button"
                 className="name"
-                onClick={() => setCategory(3)} // 정보 카테고리 선택
+                onClick={() => setCategory(3)} 
               >
                 정보
               </button>
@@ -115,8 +115,8 @@ function Post(props) {
           <span>제목</span>
           <input
             type="text"
-            maxLength="8"
             value={title}
+            maxLength="25"
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -124,19 +124,35 @@ function Post(props) {
           <span>내용</span>
           <input
             type="textarea"
-            maxLength="20"
+            maxLength="80"
             value={contents}
             onChange={(e) => setContents(e.target.value)}
           />
         </div>
-        <br/><br/><br/>
+        <br />
+        <br />
+        <br />
         <div className="create-image">
-          <span>이미지 업로드</span>
           <input
             type="file"
+            id="file-input"
             accept="image/*"
-            onChange={(e) => handleImageUpload(e)}
+            onChange={handleImageUpload}
+            style={{ display: "none" }} 
           />
+          <button
+            onClick={handleCustomFileInputClick}
+            style={{
+              marginLeft: "80px",
+              border: "none",
+              background: "lightgreen",
+              padding: "10px 20px",
+              cursor: "pointer",
+              borderRadius:'4px'
+            }}
+          >
+            이미지 추가
+          </button>
         </div>
 
         <button className="button" onClick={handlePostSubmit}>

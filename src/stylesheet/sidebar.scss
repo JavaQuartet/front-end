@@ -1,27 +1,34 @@
+@mixin fontSetting($color, $font, $size, $style, $w, $h, $spacing) {
+  color: $color;
+  font-family: $font;
+  font-size: $size;
+  font-style: $style;
+  font-weight: $w;
+  line-height: $h;
+  /* 21px */
+  letter-spacing: $spacing;
+}
 .sidemenu {
-    right: 220px;
-    top: 180px;
-    height: 996px;
-    width: 79px;
-    box-sizing: border-box;
-    position: absolute;
-    background: #ffffff;
-    border: 1px solid #42d084;
-    border-radius: 10px;
+    float: right;
+    margin: 8.2rem 2.8rem;
   
-    .post {
-      width: 40px;
-      height: 40px;
-      margin-top: 40px;
-      margin-left: 20px;
-    }
-    .photo {
-      width: 60px;
-      height: 60px;
-      border-radius: 30px;
-      margin-top: 30px;
-      margin-left: 10px;
-      border: 4px solid #42d084;
+  p{
+    @include fontSetting(#939393, "inter", 14px, normal, 500, 220%, -0.154px);
+    margin-top: 0.2rem;
+    text-align: center;
+
+    &:hover {
+        cursor: pointer;
     }
   }
-  
+
+     .side-button {
+            background: #fff;
+            border: none;
+            @include fontSetting(#42d084, "inter", 49px, normal, 500, 0%, -0.514px);
+            width: 100%;
+            margin: auto;
+          
+        }
+
+  }

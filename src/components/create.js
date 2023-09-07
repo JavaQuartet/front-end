@@ -1,6 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import Postcode from "react-daum-postcode";
+import axios from "axios";
 
 //스타일시트
 import "../stylesheet/create.scss";
@@ -8,23 +9,107 @@ import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
 
 registerLocale("ko", ko);
-
+const { kakao } = window;
 function Create(props) {
-    const [classImageURL, setClassImageURL] = useState("");
-    const [classIamgeFile, setClassImageFile] = useState(null);
+    const BASE_URL = "http://3.39.75.222:8080";
+
     const [postModalOpen, setPostModalOpen] = useState(false);
+
+    const [title, setTitle] = useState("");
+
+    const [startDateInput, setStartDateInput] = useState(null);
+    const [endDateInput, setEndDateInput] = useState(null);
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+
+    const [startYear, setStartYear] = useState(0);
+    const [startMonth, setStartMonth] = useState(0);
+    const [startDay, setStartDay] = useState(0);
 
     const [isStart, setIsStart] = useState(true);
     const [startPlace, setStartPlace] = useState("");
     const [endPlace, setEndPlace] = useState("");
 
-    const ImageUpload = (e) => {
-        fileInput.current.click();
+    const [member, setMember] = useState(0);
+    const [description, setDescription] = useState("");
+
+    let distance = 0;
+    const [startCoords, setStartCoords] = useState({ y: 0, x: 0 });
+    const [endCoords, setEndCoords] = useState({ y: 0, x: 0 });
+
+    useEffect(() => {
+        setCoords(startPlace, endPlace);
+    }, [startPlace, endPlace]);
+    //거리 계산 함수
+    const getDistance = (lat1, lng1, lat2, lng2) => {
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+        var R = 6371;
+        var dLat = deg2rad(lat2 - lat1);
+        var dLon = deg2rad(lng2 - lng1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) *
+                Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = Math.round((R * c * 100) / 100);
+
+        distance = d;
+        return d;
     };
 
-    const fileInput = useRef(null);
+    //주소로 좌표 얻어오기
+    const setCoords = (start, end) => {
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(`${start}`, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setStartCoords({ y: result[0].y, x: result[0].x });
+            }
+        });
+        geocoder.addressSearch(`${end}`, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setEndCoords({ y: result[0].y, x: result[0].x });
+            }
+        });
+        getDistance(startCoords.y, startCoords.x, endCoords.y, endCoords.x);
+    };
+    const postClass = () => {
+        console.log("title: " + title + " startRegion: " + startPlace + "endRegion: " + endPlace);
+        axios
+            .post(
+                `${BASE_URL}/class`,
+                {
+                    title: title,
+                    member_max: member,
+                    startRegion: startPlace,
+                    end_region: endPlace,
+                    description: description,
+                    start_date: startDate,
+                    end_date: endDate,
+                    start_year: startYear,
+                    start_month: startMonth,
+                    start_day: startDay,
+                    distance: distance,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${props.token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((result) => {
+                if (result.status === 201) {
+                    console.log(result);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
     return (
         <div
             className="make-outside"
@@ -41,41 +126,32 @@ function Create(props) {
                 <div className="make-title">
                     <p>plowithme</p>
                 </div>
-                <div className="make-image">
-                    <img src={`${classImageURL}`} className="club-img" />
-                    <img
-                        src={require("../img/setting.png")}
-                        className="setting-img"
-                        onClick={(e) => {
-                            ImageUpload();
-                        }}
-                    />
-                    <input
-                        type="file"
-                        ref={fileInput}
-                        accept="image/jpeg, image/jpg, image/png"
-                        onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                                let image = window.URL.createObjectURL(file);
-                                setClassImageURL(image);
-                                setClassImageFile(file);
-                            }
-                        }}
-                        style={{ display: "none" }}
-                    />
-                </div>
                 <div className="make-info">
                     <div className="make-text">
                         <span className="title">이름</span>
-                        <input type="text" maxLength="8"></input>
+                        <input
+                            type="text"
+                            maxLength="8"
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                            }}
+                        ></input>
                     </div>
                     <div className="make-text">
                         <span className="title">출발</span>
                         <DatePicker
                             className="datepicker"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
+                            selected={startDateInput}
+                            onChange={(date) => {
+                                let month = date.getMonth() + 1;
+                                let start = `${date.getFullYear()}년 ${month}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
+                                setStartDateInput(date);
+                                setStartDate(start);
+
+                                setStartYear(date.getFullYear());
+                                setStartMonth(date.getMonth() + 1);
+                                setStartDay(date.getDate());
+                            }}
                             dateFormat="yyyy년 MM월 dd일 HH시 mm분"
                             dateFormetCalendar="yyyy년 MM월"
                             showTimeSelect
@@ -90,8 +166,13 @@ function Create(props) {
                         <span className="title">도착</span>
                         <DatePicker
                             className="datepicker"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
+                            selected={endDateInput}
+                            onChange={(date) => {
+                                let month = date.getMonth() + 1;
+                                let end = `${date.getFullYear()}년 ${month}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분`;
+                                setEndDateInput(date);
+                                setEndDate(end);
+                            }}
                             dateFormat="yyyy년 MM월 dd일 HH시 mm분"
                             dateFormetCalendar="yyyy년 MM월"
                             showTimeSelect
@@ -102,15 +183,6 @@ function Create(props) {
                             locale="ko"
                         />
                     </div>
-                    {/*
-                     <div className="create-text">
-                        <span className="title">도착 시각</span>
-                        <input type="text" className="input-small"></input>
-                        <span className="span-hour">시</span>
-                        <input type="text" className="input-small"></input>
-                        <span className="span-minute">분</span>
-                    </div>
-                     */}
                     <div className="make-text">
                         <span className="title">장소</span>
                         <span className="span-start">출발</span>
@@ -140,14 +212,34 @@ function Create(props) {
                     </div>
                     <div className="make-text">
                         <span className="title">인원</span>
-                        <input type="text" maxLength="8"></input>
+                        <input
+                            type="text"
+                            maxLength="8"
+                            onChange={(e) => {
+                                setMember(e.target.value);
+                            }}
+                        ></input>
                     </div>
                 </div>
                 <div className="make-content">
                     <span>소개</span>
-                    <input type="textarea" maxLength="20"></input>
+                    <input
+                        type="textarea"
+                        maxLength="20"
+                        onChange={(e) => {
+                            setDescription(e.target.value);
+                        }}
+                    ></input>
                 </div>
-                <button>모임 만들기</button>
+                <button
+                    onClick={() => {
+                        props.setCreateOpen(false);
+                        setCoords(startPlace, endPlace);
+                        postClass();
+                    }}
+                >
+                    모임 만들기
+                </button>
             </div>
 
             {postModalOpen == true ? (
@@ -156,19 +248,18 @@ function Create(props) {
                     <Postcode
                         className="postmodal"
                         onComplete={(data) => {
-                            console.log(data);
                             setPostModalOpen(false);
-
                             let address = "";
-                            if (data.address.length < 18) {
-                                address = data.address + data.buildingName;
+
+                            if (data.autoJibunAddress === "") {
+                                address = data.jibunAddress;
                             } else {
-                                address = data.address;
+                                address = data.autoJibunAddress;
                             }
                             if (isStart === true) {
-                                setStartPlace(data.address);
+                                setStartPlace(address);
                             } else {
-                                setEndPlace(data.address);
+                                setEndPlace(address);
                             }
                         }}
                         autoClose

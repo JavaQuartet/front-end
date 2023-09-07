@@ -11,6 +11,17 @@
     letter-spacing: $space;
 }
 
+@keyframes smoothAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-40%);
+    }
+}
+
 .make-outside {
     z-index: 400;
     position: fixed;
@@ -26,9 +37,9 @@
 
 .make-background {
     position: absolute;
-    top: 40%;
-    left: 50%;
-    width: 800px;
+    top: 30%;
+    left: 32%;
+    width: 600px;
     min-width: 700px;
     min-height: 650px;
     height: 60%;
@@ -36,6 +47,7 @@
     transform: translate(-50%, -50%);
     border-radius: 10px;
     margin-top: 7rem;
+    animation: smoothAppear 0.5s forwards;
 
     .make-title {
         margin-bottom: -5.5rem;
@@ -64,7 +76,7 @@
     .make-info {
         @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.176px);
         float: left;
-        margin-left: 22%;
+        margin-left: 20%;
         margin-top: 12%;
         height: 60%;
         .make-text {
@@ -78,6 +90,7 @@
                 vertical-align: middle;
             }
             .title {
+                z-index: 100;
                 line-height: 2.3rem;
                 vertical-align: middle;
                 margin: 0rem 1rem 0rem -1rem;
@@ -131,21 +144,20 @@
                 padding: 0.4rem;
                 margin-left: -0.3rem;
                 text-align: center;
-                width: 18rem;
+                width: 25rem;
                 @include fontSetting(#000, "inter", 16px, normal, 500, 150%, -0.176px);
             }
         }
     }
 
     .make-content {
-        clear: both;
         position: relative;
         margin-top: 30rem;
         margin-left: 5.3rem;
         span {
             position: absolute;
-            top: 5%;
-            left: 3%;
+            top: -5%;
+            left: 0%;
         }
 
         input {
@@ -175,6 +187,7 @@
 
     .datepicker {
         border-radius: 10px;
+        z-index: 405;
         border: none;
         outline: none;
         padding: 0.4rem;
@@ -193,9 +206,14 @@
     width: 104% !important;
 }
 
+.react-datepicker-popper {
+    z-index: 9999 !important;
+}
+
 .postcode-background {
     position: absolute;
     top: 25%;
+    left: 37%;
     width: 500px;
     height: 500px;
     background: #fff;
