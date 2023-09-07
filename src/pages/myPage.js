@@ -20,7 +20,6 @@ function MyPage({ user, setUser }) {
   let [msgModal, setMsgModal] = useState(false);
 
 
-  let fetchURL = 'http://3.39.75.222:8080';
 
   let [classNum, setClassNum] = useState(0);
 
