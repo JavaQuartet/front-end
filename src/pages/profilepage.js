@@ -15,7 +15,6 @@ function MyPage({ user, setUser }) {
   let [msgModal, setMsgModal] = useState(false); //쪽지 쓰는 모달 창
 
 
-  let [msgModal, setMsgModal] = useState(false);
 
   let fetchURL = 'http://3.39.75.222:8080';
 

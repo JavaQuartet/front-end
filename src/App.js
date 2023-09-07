@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 //자체작성 페이지 or 컴포넌트
@@ -10,6 +10,10 @@ import Navbar from "./components/navbar.js";
 import MyPloggings from "./pages/myPloggings.js";
 import Login from "./pages/login.js";
 import SignUp from "./pages/signUp.js";
+import axios from "axios";
+import Main from "./pages/main.js";
+import ProfilePage from "./pages/profilepage.js";
+
 //스타일시트 파일
 import "./stylesheet/App.scss";
 
