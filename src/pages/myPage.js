@@ -19,8 +19,14 @@ function MyPage({ user, setUser }) {
 
   let [msgModal, setMsgModal] = useState(false);
 
+
   let fetchURL = 'http://3.39.75.222:8080';
 
+  let [classNum, setClassNum] = useState(0);
+
+
+
+  const fetchURL = "http://3.39.75.222:8080";
   let [userInfo, setUserInfo] = useState({
     nickname: '',
     profileUrl: '',
@@ -36,6 +42,13 @@ function MyPage({ user, setUser }) {
 
   useEffect(() => {
 
+    accessToken = sessionStorage.getItem('accessToken');
+
+    if(!user.isLogin){
+      alert('로그인 후 이용 바랍니다.');
+      navigate('/login')
+    }
+    else{
     //내 마이페이지인지 확인
     axios.get(fetchURL + "/me", {
       headers: {
@@ -115,7 +128,7 @@ function MyPage({ user, setUser }) {
     }).catch((e) => {
       alert(e.message);
     })
-
+  }
   }, []);
 
 
@@ -129,13 +142,14 @@ function MyPage({ user, setUser }) {
         }
       }).then((result) => {
         let tmp = result.data.data;
-        console.log(tmp);
         setMsgs(tmp);
       }).catch((e) => {
         alert(e.message);
       })
     }
   }, [msgModal])
+
+  let [maker, setMaker] = useState(0);
 
 
   return (
@@ -153,8 +167,8 @@ function MyPage({ user, setUser }) {
                   return (
                     <div key={i} className="msg">
                       <div className="msg-content">
-                        <img alt="팔로워 프로필 사진" src="https://www.shutterstock.com/image-photo/surreal-concept-roll-world-dice-600w-1356798002.jpg" />
-                        <p>tmdwn님이 쪽지를 보냈습니다 "안녕하세요!"</p>
+                        <img alt="프로필 사진" src={e.sender_profile_url}/>
+                        <p>{e.senderNickname}님이 쪽지를 보냈습니다. "{e.content}"</p>
                       </div>
                       <hr />
                     </div>
@@ -165,7 +179,7 @@ function MyPage({ user, setUser }) {
           : null
       }
       {
-        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} /> : null
+        logModal ? <Detail modalOpen={logModal} setModalOpen={setLogModal} token={accessToken} maker={maker} classNo={classNum}/> : null
       }
       {
         modal ?
@@ -180,7 +194,6 @@ function MyPage({ user, setUser }) {
                     nickname: document.getElementById('new-nickname').value,
                     introduction: document.getElementById('new-introduction').value
                   }
-                  console.log(newData);
                   axios.patch(fetchURL + `/users/${user.id}/profile`, newData, {
                     headers: {
                       Authorization: `Bearer ${accessToken}`
@@ -215,13 +228,13 @@ function MyPage({ user, setUser }) {
         <img className="profile-image" alt='프로필 사진' src={userInfo.profileUrl}></img>
         <h2>{userInfo.nickname}</h2>
         <div className="intro-msg">{userInfo.introduction}</div>
-        <div className="follow-info">
+        {/* <div className="follow-info">
           <p>팔로워</p>
           <p>N명</p>
           <hr />
           <p>팔로잉</p>
           <p>N명</p>
-        </div>
+        </div> */}
 
         {
           isMine ?
@@ -257,7 +270,7 @@ function MyPage({ user, setUser }) {
             {
               logs.length > 0 ?
                 logs.map((e, i) => {
-                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl} />;
+                  return <OneLog title={e.title} key={i} setLogModal={setLogModal} imgUrl={e.imgUrl} setClassNum={setClassNum} classId={e.class_Id} setMaker={setMaker} makerId={e.maker_id}/>;
                 })
                 : <p>모임에 참여해주세요!</p>
             }
@@ -268,10 +281,12 @@ function MyPage({ user, setUser }) {
   );
 }
 
-function OneLog({ setLogModal, title, imgUrl }) {
+function OneLog({ setLogModal, title, imgUrl, setClassNum, classId, setMaker, makerId}) {
 
   return (
     <div onClick={() => {
+      setMaker(makerId);
+      setClassNum(classId);
       setLogModal(true);
     }} className="one-log">
       <img alt="플로깅 사진" src={imgUrl} />
@@ -283,16 +298,3 @@ function OneLog({ setLogModal, title, imgUrl }) {
 
 
 export default MyPage;
-
-/* 
-
-
-
-
-
-
-
-
-
-
-*/

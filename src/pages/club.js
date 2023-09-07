@@ -169,10 +169,10 @@ function Club(props) {
                         </span>
                         <span
                             onClick={() => {
-                                setSearch("전라");
+                                setSearch("대전");
                             }}
                         >
-                            # 전라
+                            # 대전
                         </span>
                         <span
                             onClick={() => {

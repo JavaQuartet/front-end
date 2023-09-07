@@ -55,7 +55,7 @@ function Create(props) {
                 Math.sin(dLon / 2) *
                 Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = Math.round((R * c * 100) / 100);
+        var d = Math.round(R * c * 100) / 100;
 
         distance = d;
         return d;

@@ -26,14 +26,23 @@ function Community() {
   const [postClickStates, setPostClickStates] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
 
+
   //token
   let t = sessionStorage.getItem("accessToken");
   const navigate = useNavigate();
 
+  let [modal, setModal] = useState(false);
+
+  let [msgModal, setMsgModal] = useState(false);
+  const fetchURL = "http://3.39.75.222:8080";
+
+
+
   // 커뮤니티 게시글 조회
   useEffect(() => {
     axios
-      .get("http://3.39.75.222:8080/board")
+
+      .get(fetchURL+"/board")
       .then((result) => {
         if (result.status === 200) {
           console.log("커뮤니티 전체 게시글 조회 성공");
@@ -44,7 +53,9 @@ function Community() {
           //커뮤니티 게시글 댓글 조회
           result.data.data.forEach((post) => {
             axios
-              .get(`http://3.39.75.222:8080/board/${post.postId}/comments`)
+
+              .get(fetchURL+`/board/${post.postId}/comments`)
+
               .then((response) => {
                 if (response.status === 200) {
                   const commentsForPost = response.data.data;
@@ -183,10 +194,9 @@ function Community() {
             updatedData[index].title = modifiedTitle;
             updatedData[index].contents = modifiedContents;
           }
-          console.log(updatedData);
   
-setFilteredData(updatedData);
-setData(updatedData);
+           setFilteredData(updatedData);
+           setData(updatedData)
 
           setModifyOpen(false); // 모달 닫기
         } else {
