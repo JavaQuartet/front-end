@@ -13,12 +13,13 @@ function MyPloggings() {
 
     let accessToken = sessionStorage.getItem('accessToken');
 
+
     const fetchURL = "http://3.39.75.222:8080";
 
     let [classNum, setClassNum] = useState(0);
 
     let [maker, setMaker] =useState(0);
-    
+
 
     useEffect(() => {
         //나의 모임 조회

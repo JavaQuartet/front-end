@@ -14,7 +14,11 @@ function MyPage({ user, setUser }) {
   let [logModal, setLogModal] = useState(false); //Plogging log 모달
   let [msgModal, setMsgModal] = useState(false); //쪽지 쓰는 모달 창
 
-  const fetchURL = "http://3.39.75.222:8080";
+
+  let [msgModal, setMsgModal] = useState(false);
+
+  let fetchURL = 'http://3.39.75.222:8080';
+
 
   let [userInfo, setUserInfo] = useState({
     nickname: '',

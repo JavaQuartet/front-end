@@ -36,7 +36,9 @@ function SignUp() {
         },
     };
 
-    const fetchURL = "http://3.39.75.222:8080";
+
+    const fetchURL = "http:/3.39.75.222:8080";
+
 
     return (
         <div className="signup-background">

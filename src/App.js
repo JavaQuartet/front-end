@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import axios from "axios";
+import React, {  useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 //자체작성 페이지 or 컴포넌트
 import Club from "./pages/club.js";
 import Community from "./pages/community.js";
 import MyPage from "./pages/myPage.js";
-import Main from "./pages/main.js";
 import Settings from "./pages/settings.js";
 import Navbar from "./components/navbar.js";
 import MyPloggings from "./pages/myPloggings.js";
-import ProfilePage from "./pages/profilepage.js";
 import Login from "./pages/login.js";
 import SignUp from "./pages/signUp.js";
 //스타일시트 파일
