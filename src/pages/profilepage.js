@@ -89,7 +89,7 @@ function MyPage({ user, setUser }) {
     }).then((result) => {
       let tmp = result.data.data;
       let tmpArr;
-      axios.get("https://picsum.photos/v2/list")
+      axios.get("https://picsum.photos/v2/list?page=2&limit=100")
         .then((result) => {
           tmpArr = result.data.sort(()=> Math.random()-0.5);
           // tmpArr = result.data;
