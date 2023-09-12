@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 //자체작성 페이지 or 컴포넌트
@@ -27,26 +27,29 @@ function App() {
 
     const fetchURL = "http://3.39.75.222:8080";
 
-    useEffect(()=>{
-        let accessToken = sessionStorage.getItem('accessToken');
-        if(accessToken !== undefined){
-            axios.get(fetchURL + "/me", {
-                headers: {
-                  Authorization: `Bearer ${accessToken}`
-                }
-              }).then((result) => {
-                console.log(result.data);
-                setUser({
-                    isLogin:true,
-                    id: result.data.data.id,
-                    email: result.data.data.email,
-                    name: result.data.data.name
+    useEffect(() => {
+        let accessToken = sessionStorage.getItem("accessToken");
+        if (accessToken !== undefined) {
+            axios
+                .get(fetchURL + "/me", {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                })
+                .then((result) => {
+                    console.log(result.data);
+                    setUser({
+                        isLogin: true,
+                        id: result.data.data.id,
+                        email: result.data.data.email,
+                        name: result.data.data.name,
+                    });
+                })
+                .catch((e) => {
+                    console.log(e);
                 });
-              }).catch((e) => {
-                alert(e.message);
-              })
         }
-    },[])
+    }, []);
 
     return (
         <div className="App">

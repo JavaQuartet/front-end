@@ -36,9 +36,7 @@ function SignUp() {
         },
     };
 
-
-    const fetchURL = "http:/3.39.75.222:8080";
-
+    const fetchURL = "http://3.39.75.222:8080";
 
     return (
         <div className="signup-background">
@@ -97,11 +95,10 @@ function SignUp() {
                 />
                 <button
                     onClick={() => {
-                        let regex = new RegExp('^[a-zA-Z0-9]{6,15}$')
+                        let regex = new RegExp("^[a-zA-Z0-9]{6,15}$");
                         if (!regex.test(pw)) {
-                            alert('영어와 숫자로 조합된 6~15자 사이의 비밀번호를 입력해주세요!')
-                        }
-                        else {
+                            alert("영어와 숫자로 조합된 6~15자 사이의 비밀번호를 입력해주세요!");
+                        } else {
                             if (pw !== pw2) {
                                 alert("비밀번호를 확인 해주세요!");
                             } else {

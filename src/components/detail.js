@@ -18,7 +18,6 @@ function Detail(props) {
     const navigate = useNavigate();
     const BASE_URL = "http://3.39.75.222:8080";
 
-
     const fetchURL = "http://3.39.75.222:8080";
 
     const [map, setMap] = useState(null);
@@ -252,7 +251,8 @@ function Detail(props) {
                 .then((result) => {
                     if (result.status === 200) {
                         alert("모임 참여 완료!");
-                        window.location.replace("/");
+                        console.log(result);
+                        navigate("/mypage");
                     }
                 })
                 .catch((error) => {
@@ -282,6 +282,7 @@ function Detail(props) {
             )
             .then((result) => {
                 if (result.status === 200) {
+                    console.log(result);
                     alert("모임 나가기 완료!");
                     window.location.replace("/");
                 }
@@ -703,13 +704,7 @@ function Detail(props) {
                         </form>
                     </div>
                     {isJoin === 0 ? (
-                        <button
-                            className="detail-btn"
-                            onClick={() => {
-                                leaveClass();
-                                window.location.replace("/");
-                            }}
-                        >
+                        <button className="detail-btn" onClick={leaveClass}>
                             모임 나가기
                         </button>
                     ) : null}
